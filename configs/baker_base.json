@@ -34,6 +34,8 @@
         "n_speakers": 0
     },
     "model": {
+        "gen_istft_n_fft": 16,
+        "gen_istft_hop_size": 4,
         "inter_channels": 192,
         "hidden_channels": 192,
         "filter_channels": 768,
@@ -66,16 +68,12 @@
         ],
         "upsample_rates": [
             8,
-            8,
-            2,
-            2
+            8
         ],
         "upsample_initial_channel": 512,
         "upsample_kernel_sizes": [
             16,
-            16,
-            4,
-            4
+            16
         ],
         "n_layers_q": 3,
         "use_spectral_norm": false

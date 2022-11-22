@@ -12,6 +12,8 @@ import monotonic_align
 from torch.nn import Conv1d, ConvTranspose1d, AvgPool1d, Conv2d
 from torch.nn.utils import weight_norm, remove_weight_norm, spectral_norm
 from commons import init_weights, get_padding
+from stft import TorchSTFT
+import math
 
 
 class StochasticDurationPredictor(nn.Module):
@@ -374,14 +376,18 @@ class Generator(torch.nn.Module):
         upsample_rates,
         upsample_initial_channel,
         upsample_kernel_sizes,
+        gen_istft_n_fft,
+        gen_istft_hop_size,
         gin_channels=0,
     ):
         super(Generator, self).__init__()
+        self.gen_istft_n_fft = gen_istft_n_fft
+        self.gen_istft_hop_size = gen_istft_hop_size
         self.num_kernels = len(resblock_kernel_sizes)
         self.num_upsamples = len(upsample_rates)
-        self.conv_pre = Conv1d(
+        self.conv_pre = weight_norm(Conv1d(
             initial_channel, upsample_initial_channel, 7, 1, padding=3
-        )
+        ))
         resblock = modules.ResBlock1 if resblock == "1" else modules.ResBlock2
 
         self.ups = nn.ModuleList()
@@ -406,9 +412,12 @@ class Generator(torch.nn.Module):
             ):
                 self.resblocks.append(resblock(ch, k, d))
 
-        self.conv_post = Conv1d(ch, 1, 7, 1, padding=3, bias=False)
+        self.post_n_fft = self.gen_istft_n_fft
+        self.conv_post = weight_norm(Conv1d(ch, self.post_n_fft + 2, 7, 1, padding=3))
         self.ups.apply(init_weights)
-
+        self.conv_post.apply(init_weights)
+        self.reflection_pad = torch.nn.ReflectionPad1d((1, 0))
+        self.stft = TorchSTFT(filter_length=self.gen_istft_n_fft, hop_length=self.gen_istft_hop_size, win_length=self.gen_istft_n_fft)
         if gin_channels != 0:
             self.cond = nn.Conv1d(gin_channels, upsample_initial_channel, 1)
 
@@ -428,16 +437,21 @@ class Generator(torch.nn.Module):
                     xs += self.resblocks[i * self.num_kernels + j](x)
             x = xs / self.num_kernels
         x = F.leaky_relu(x)
+        x = self.reflection_pad(x)
         x = self.conv_post(x)
-        x = torch.tanh(x)
-
-        return x
+        #x = torch.tanh(x)
+        spec = torch.exp(x[:, :self.post_n_fft // 2 + 1, :])
+        phase = math.pi * torch.sin(x[:, self.post_n_fft // 2 + 1:, :])
+        out = self.stft.inverse(spec, phase).to(x.device)
+        return out
 
     def remove_weight_norm(self):
         for l in self.ups:
             remove_weight_norm(l)
         for l in self.resblocks:
             l.remove_weight_norm()
+        remove_weight_norm(self.conv_pre)
+        remove_weight_norm(self.conv_post)
 
 
 class DiscriminatorP(torch.nn.Module):
