@@ -31,7 +31,7 @@ class TextAudioLoader(torch.utils.data.Dataset):
 
         self.add_blank = hparams.add_blank
         self.min_text_len = getattr(hparams, "min_text_len", 1)
-        self.max_text_len = getattr(hparams, "max_text_len", 190)
+        self.max_text_len = getattr(hparams, "max_text_len", 100)
 
         random.seed(1234)
         random.shuffle(self.audiopaths_and_text)
@@ -48,7 +48,8 @@ class TextAudioLoader(torch.utils.data.Dataset):
         audiopaths_and_text_new = []
         lengths = []
         for audiopath, text in self.audiopaths_and_text:
-            if self.min_text_len <= len(text) and len(text) <= self.max_text_len:
+            text_len = len(text.split())
+            if self.min_text_len <= len(text_len) and len(text_len) <= self.max_text_len:
                 audiopaths_and_text_new.append([audiopath, text])
                 lengths.append(os.path.getsize(audiopath) // (2 * self.hop_length))
         self.audiopaths_and_text = audiopaths_and_text_new
