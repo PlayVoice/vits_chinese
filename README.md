@@ -9,7 +9,7 @@ Espnet连接：github.com/espnet/espnet/tree/master/espnet2/gan_tts/vits
 coqui-ai/TTS连接：github.com/coqui-ai/TTS/tree/main/recipes/ljspeech/vits_tts
 
 
-### 基于VITS 实现 16K baker TTS 的流程记录
+### 基于VITS 实现 16K TTS 的流程记录
 
 pip install -r requirements.txt
 
@@ -17,7 +17,10 @@ cd monotonic_align
 
 python setup.py build_ext --inplace
 
-### 将16K标贝音频拷贝到./baker_waves/，启动训练
+### Data Link
+https://github.com/PlayVoice/HuaYan_TTS
+
+### 将16K音频拷贝到./baker_waves/，启动训练
 
 python train.py -c configs/baker_base.json -m baker_base
 
