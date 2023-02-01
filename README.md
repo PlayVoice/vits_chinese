@@ -28,6 +28,8 @@ python train.py -c configs/baker_base.json -m baker_base
 
 两张1080卡，训练两天，基本可以使用了
 
+![LOSS值](/configs/loss.png)
+
 # 测试
 python vits_strings.py
 
