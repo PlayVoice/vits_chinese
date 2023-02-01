@@ -745,6 +745,7 @@ class SynthesizerTrn(nn.Module):
         # frame
         m_frame, logs_frame = self.frame(x, x_mask, attn)
         # BiFlow
+        z_frame = m_frame + torch.randn_like(m_frame) * torch.exp(logs_frame)
         z_frame = self.flow(m_frame, y_mask, g=g, reverse=True)
 
         z_slice, ids_slice = commons.rand_slice_segments(
