@@ -132,7 +132,7 @@ if __name__ == "__main__":
             x_tst_lengths = torch.LongTensor([input_ids.size(0)]).cuda()
             audio = (
                 net_g.infer(
-                    x_tst, x_tst_lengths, noise_scale=0, noise_scale_w=0, length_scale=1
+                    x_tst, x_tst_lengths, noise_scale=0, length_scale=1
                 )[0][0, 0]
                 .data.cpu()
                 .float()
