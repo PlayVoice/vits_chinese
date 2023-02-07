@@ -1,4 +1,4 @@
-### VITS实现的中文TTS，集成部分微软NaturalSpeech优化措施
+### VITS实现的中文TTS，集成微软NaturalSpeech推理Loss优化措施，以及iSTFT加速
 
 this is the copy of https://github.com/jaywalnut310/vits		
 
