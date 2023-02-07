@@ -32,9 +32,4 @@ python train.py -c configs/baker_base.json -m baker_base
 python vits_strings.py
 
 ### iSTFT
-默认
-
-### PQMF+iSTFT
-直接训练PQMF+iSTFT模型，出现文本编码和时长出错、而VAE编码再解码正确
-
-故采用训练策略：训练基础VITS模型进行迁移训练，只训练PQMF+iSTFT的HiFi-GAN解码器
+完成
