@@ -577,6 +577,8 @@ class SynthesizerTrn(nn.Module):
         m_p = torch.matmul(attn.squeeze(1), m_p.transpose(1, 2)).transpose(1, 2)
         logs_p = torch.matmul(attn.squeeze(1), logs_p.transpose(1, 2)).transpose(1, 2)
         # infer loss
+        m_frame = m_p
+        logs_frame = logs_p
         z_frame = m_frame + torch.randn_like(m_frame) * torch.exp(logs_frame)
         z_frame = self.flow(m_frame, y_mask, g=g, reverse=True)
 
