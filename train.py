@@ -285,7 +285,6 @@ def train_and_evaluate(
                     loss_mel,
                     loss_dur,
                     loss_kl,
-                    loss_kl_frame,
                     loss_kl_flow,
                 ]
                 logger.info(
