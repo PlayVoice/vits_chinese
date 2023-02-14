@@ -301,7 +301,7 @@ def train_and_evaluate(
                     f"loss_mel={loss_mel:.3f}, loss_dur={loss_dur:.3f}, loss_kl={loss_kl:.3f}"
                 )
                 logger.info(
-                    f"loss_kl_frame={loss_kl_frame:.3f}, loss_kl_flow={loss_kl_flow:.3f}"
+                    f"loss_kl_flow={loss_kl_flow:.3f}"
                 )
 
                 scalar_dict = {
@@ -317,7 +317,6 @@ def train_and_evaluate(
                         "loss/g/mel": loss_mel,
                         "loss/g/dur": loss_dur,
                         "loss/g/kl": loss_kl,
-                        "loss/g/frame": loss_kl_frame,
                         "loss/g/flow": loss_kl_flow,
                     }
                 )
