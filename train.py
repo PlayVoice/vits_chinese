@@ -254,11 +254,8 @@ def train_and_evaluate(
                 loss_dur = torch.sum(l_length.float())
                 loss_mel = F.l1_loss(y_mel, y_hat_mel) * hps.train.c_mel
                 loss_kl = kl_loss(z_p, logs_q, m_p, logs_p, z_mask) * hps.train.c_kl
-                loss_kl_frame = (
-                    kl_loss(z_p, logs_q, m_frame, logs_frame, z_mask) * hps.train.c_kl
-                )
                 loss_kl_flow = (
-                    kl_loss(z, logs_q, z_frame, logs_frame, z_mask) * hps.train.c_kl
+                    kl_loss(z_frame, logs_frame, m_q, logs_q, z_mask) * hps.train.c_kl
                 )
 
                 loss_fm = feature_loss(fmap_r, fmap_g)
@@ -269,7 +266,6 @@ def train_and_evaluate(
                     + loss_mel
                     + loss_dur
                     + loss_kl
-                    + loss_kl_frame
                     + loss_kl_flow
                 )
         optim_g.zero_grad()
