@@ -1,6 +1,6 @@
-### Best TTS base on BERT and VITS with some Natural Speech Features Of Microsoft
+### Best TTS based on BERT and VITS with some Natural Speech Features Of Microsoft
 
-based on BERT，NatureSpeech, VITS
+based on BERT，NaturalSpeech, VITS
 
 ### Infer
 
