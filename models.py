@@ -12,8 +12,6 @@ import monotonic_align
 from torch.nn import Conv1d, ConvTranspose1d, AvgPool1d, Conv2d
 from torch.nn.utils import weight_norm, remove_weight_norm, spectral_norm
 from commons import init_weights, get_padding
-from stft import TorchSTFT
-import math
 
 
 class DurationPredictor(nn.Module):
@@ -82,40 +80,24 @@ class TextEncoder(nn.Module):
         self.p_dropout = p_dropout
 
         self.emb = nn.Embedding(n_vocab, hidden_channels)
+        self.emb_bert = nn.Linear(256, hidden_channels)
         nn.init.normal_(self.emb.weight, 0.0, hidden_channels**-0.5)
 
         self.encoder = attentions.Encoder(
             hidden_channels, filter_channels, n_heads, n_layers, kernel_size, p_dropout
         )
-        # hidden_channels == 192
-        self.lstm = torch.nn.LSTM(
-            192, 96, 3, bidirectional=True, batch_first=True, dropout=0.1
-        )
         self.proj = nn.Conv1d(hidden_channels, out_channels * 2, 1)
 
-    def forward(self, x, x_lengths):
+    def forward(self, x, x_lengths, bert):
         x = self.emb(x) * math.sqrt(self.hidden_channels)  # [b, t, h]
+        b = self.emb_bert(bert)
+        x = x + b
         x = torch.transpose(x, 1, -1)  # [b, h, t]
         x_mask = torch.unsqueeze(commons.sequence_mask(x_lengths, x.size(2)), 1).to(
             x.dtype
         )
 
         x = self.encoder(x * x_mask, x_mask)
-
-        # modify start
-        # pytorch tensor are not reversible, hence the conversion
-        x_lengths = x_lengths.cpu().numpy()
-
-        x = torch.transpose(x, 1, -1)  # [b, h, t]
-        x = nn.utils.rnn.pack_padded_sequence(
-            x, x_lengths, batch_first=True, enforce_sorted=False
-        )
-        # Resets parameter data pointer (to contiguous chunk) so that they can use faster code paths
-        self.lstm.flatten_parameters()
-        x, (_, _) = self.lstm(x)
-        x, _ = nn.utils.rnn.pad_packed_sequence(x, batch_first=True)
-        x = torch.transpose(x, 1, -1)  # [b, h, t]
-        # modify end
         stats = self.proj(x) * x_mask
 
         m, logs = torch.split(stats, self.out_channels, dim=1)
@@ -226,18 +208,14 @@ class Generator(torch.nn.Module):
         upsample_rates,
         upsample_initial_channel,
         upsample_kernel_sizes,
-        gen_istft_n_fft,
-        gen_istft_hop_size,
         gin_channels=0,
     ):
         super(Generator, self).__init__()
-        self.gen_istft_n_fft = gen_istft_n_fft
-        self.gen_istft_hop_size = gen_istft_hop_size
         self.num_kernels = len(resblock_kernel_sizes)
         self.num_upsamples = len(upsample_rates)
-        self.conv_pre = weight_norm(Conv1d(
+        self.conv_pre = Conv1d(
             initial_channel, upsample_initial_channel, 7, 1, padding=3
-        ))
+        )
         resblock = modules.ResBlock1 if resblock == "1" else modules.ResBlock2
 
         self.ups = nn.ModuleList()
@@ -257,17 +235,12 @@ class Generator(torch.nn.Module):
         self.resblocks = nn.ModuleList()
         for i in range(len(self.ups)):
             ch = upsample_initial_channel // (2 ** (i + 1))
-            for j, (k, d) in enumerate(
-                zip(resblock_kernel_sizes, resblock_dilation_sizes)
-            ):
+            for j, (k, d) in enumerate(zip(resblock_kernel_sizes, resblock_dilation_sizes)):
                 self.resblocks.append(resblock(ch, k, d))
 
-        self.post_n_fft = self.gen_istft_n_fft
-        self.conv_post = weight_norm(Conv1d(ch, self.post_n_fft + 2, 7, 1, padding=3))
+        self.conv_post = Conv1d(ch, 1, 7, 1, padding=3, bias=False)
         self.ups.apply(init_weights)
-        self.conv_post.apply(init_weights)
-        self.reflection_pad = torch.nn.ReflectionPad1d((1, 0))
-        self.stft = TorchSTFT(filter_length=self.gen_istft_n_fft, hop_length=self.gen_istft_hop_size, win_length=self.gen_istft_n_fft)
+
         if gin_channels != 0:
             self.cond = nn.Conv1d(gin_channels, upsample_initial_channel, 1)
 
@@ -287,13 +260,10 @@ class Generator(torch.nn.Module):
                     xs += self.resblocks[i * self.num_kernels + j](x)
             x = xs / self.num_kernels
         x = F.leaky_relu(x)
-        x = self.reflection_pad(x)
         x = self.conv_post(x)
-        #x = torch.tanh(x)
-        spec = torch.exp(x[:, :self.post_n_fft // 2 + 1, :])
-        phase = math.pi * torch.sin(x[:, self.post_n_fft // 2 + 1:, :])
-        out = self.stft.inverse(spec, phase).to(x.device)
-        return out
+        x = torch.tanh(x)
+
+        return x
 
     def remove_weight_norm(self):
         for l in self.ups:
@@ -533,9 +503,8 @@ class SynthesizerTrn(nn.Module):
         self.flow.remove_weight_norm()
         self.enc_q.remove_weight_norm()
 
-    def forward(self, x, x_lengths, y, y_lengths, sid=None):
-
-        x, m_p, logs_p, x_mask = self.enc_p(x, x_lengths)
+    def forward(self, x, x_lengths, bert, y, y_lengths, sid=None):
+        x, m_p, logs_p, x_mask = self.enc_p(x, x_lengths, bert)
         if self.n_speakers > 0:
             g = self.emb_g(sid).unsqueeze(-1)  # [b, h, 1]
         else:
@@ -576,36 +545,19 @@ class SynthesizerTrn(nn.Module):
         # expand prior
         m_p = torch.matmul(attn.squeeze(1), m_p.transpose(1, 2)).transpose(1, 2)
         logs_p = torch.matmul(attn.squeeze(1), logs_p.transpose(1, 2)).transpose(1, 2)
-        # infer loss
-        m_frame = m_p
-        logs_frame = logs_p
-        z_frame = m_frame + torch.randn_like(m_frame) * torch.exp(logs_frame)
-        z_frame = self.flow(m_frame, y_mask, g=g, reverse=True)
 
         z_slice, ids_slice = commons.rand_slice_segments(
             z, y_lengths, self.segment_size
         )
         o = self.dec(z_slice, g=g)
-        return (
-            o,
-            l_length,
-            attn,
-            ids_slice,
-            x_mask,
-            y_mask,
-            (z, z_p, m_p, logs_p, m_frame, logs_frame, z_frame, m_q, logs_q),
-        )
 
-    def infer(
-        self,
-        x,
-        x_lengths,
-        sid=None,
-        noise_scale=1,
-        length_scale=1,
-        max_len=None,
-    ):
-        x, m_p, logs_p, x_mask = self.enc_p(x, x_lengths)
+        # infer
+        z_r = m_p + torch.randn_like(m_p) * torch.exp(logs_p)
+        z_r = self.flow(z_r, y_mask, g=g, reverse=True)
+        return o, l_length, attn, ids_slice, x_mask, y_mask, (z, z_p, z_r, m_p, logs_p, m_q, logs_q)
+
+    def infer(self, x, x_lengths, bert, sid=None, noise_scale=1, length_scale=1, max_len=None):
+        x, m_p, logs_p, x_mask = self.enc_p(x, x_lengths, bert)
         if self.n_speakers > 0:
             g = self.emb_g(sid).unsqueeze(-1)  # [b, h, 1]
         else:

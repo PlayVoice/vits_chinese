@@ -65,6 +65,36 @@ def save_checkpoint(model, optimizer, learning_rate, iteration, checkpoint_path)
     )
 
 
+def load_model(checkpoint_path, model):
+    assert os.path.isfile(checkpoint_path)
+    checkpoint_dict = torch.load(checkpoint_path, map_location="cpu")
+    saved_state_dict = checkpoint_dict["model"]
+    if hasattr(model, "module"):
+        state_dict = model.module.state_dict()
+    else:
+        state_dict = model.state_dict()
+    new_state_dict = {}
+    for k, v in state_dict.items():
+        try:
+            new_state_dict[k] = saved_state_dict[k]
+        except:
+            logger.info("%s is not in the checkpoint" % k)
+            new_state_dict[k] = v
+    if hasattr(model, "module"):
+        model.module.load_state_dict(new_state_dict)
+    else:
+        model.load_state_dict(new_state_dict)
+    return model
+
+
+def save_model(model, checkpoint_path):
+    if hasattr(model, 'module'):
+        state_dict = model.module.state_dict()
+    else:
+        state_dict = model.state_dict()
+    torch.save({'model': state_dict}, checkpoint_path)
+
+
 def summarize(
     writer,
     global_step,
@@ -154,16 +184,11 @@ def load_wav_to_torch(full_path):
     return torch.FloatTensor(data.astype(np.float32)), sampling_rate
 
 
-# dataPath = './baker_waves/'
-# dataPost = '.wav'
-
-
 def load_filepaths_and_text(filename, split="|"):
     with open(filename, encoding="utf-8") as f:
         filepaths_and_text = []
         for line in f:
             path_text = line.strip().split(split)
-            # path_text[0] = dataPath + path_text[0] + dataPost
             filepaths_and_text.append(path_text)
     return filepaths_and_text
 
@@ -174,7 +199,7 @@ def get_hparams(init=True):
         "-c",
         "--config",
         type=str,
-        default="./configs/base.json",
+        default="./configs/bert_vits.json",
         help="JSON file for configuration",
     )
     parser.add_argument("-m", "--model", type=str, required=True, help="Model name")

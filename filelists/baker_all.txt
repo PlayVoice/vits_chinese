@@ -1,3 +1,32 @@
+./baker_waves/000001.wav|./baker_bert/000001.npy|sil k a2 ^ er2 p u3 p ei2 ^ uai4 s uen1 ^ uan2 h ua2 t i1 sp sil
+./baker_waves/000002.wav|./baker_bert/000002.npy|sil j ia2 ^ v3 c uen1 ^ ian2 b ie2 z ai4 ^ iong1 b ao4 ^ uo3 sp sil
+./baker_waves/000003.wav|./baker_bert/000003.npy|sil b ao2 m a3 p ei4 g ua4 b o3 l uo2 ^ an1 sp d iao1 ch an2 ^ van4 zh en3 d ong3 ^ ueng1 t a4 sp sil
+./baker_waves/000004.wav|./baker_bert/000004.npy|sil d eng4 x iao3 p ing2 ^ v3 s a4 q ie4 ^ er3 h uei4 ^ u4 sp sil
+./baker_waves/000005.wav|./baker_bert/000005.npy|sil l ao2 h u3 ^ iou4 z ai3 ^ v2 ch ong3 ^ u4 q van3 ^ uan2 sh ua3 sp sil
+./baker_waves/000006.wav|./baker_bert/000006.npy|sil sh en1 ch ang2 ^ ve1 ^ u2 ch iii3 ^ er4 c uen4 ^ u3 f en1 h uo4 ^ i3 sh ang4 sp sil
+./baker_waves/000007.wav|./baker_bert/000007.npy|sil zh ao4 d i2 ^ ve1 c ao2 ^ vn2 t eng2 q v4 g uei3 ^ u1 sp sil
+./baker_waves/000008.wav|./baker_bert/000008.npy|sil zh an2 p in3 s uei1 ^ iou3 sp zh an3 ^ van2 q ve4 t uei2 sp sil
+./baker_waves/000009.wav|./baker_bert/000009.npy|sil ^ i2 s an3 j v1 ^ er2 t ong2 h e2 ^ iou4 t uo1 ^ er2 t ong2 ^ uei2 zh u3 sp sil
+./baker_waves/000010.wav|./baker_bert/000010.npy|sil k e1 t e4 n i1 sh en1 ch uan1 b ao4 ^ uen2 d a4 ^ i1 sp sil
+./baker_waves/000011.wav|./baker_bert/000011.npy|sil ^ in3 c ai2 ^ iao4 sh ai1 sp ^ iong4 c ai2 ^ ie3 ^ iao4 sh ai1 sp sil
+./baker_waves/000012.wav|./baker_bert/000012.npy|sil n an2 ^ ve4 k uen1 l uen2 sh an1 ^ v3 x i1 z ang4 j ie1 r ang3 sp sil
+./baker_waves/000013.wav|./baker_bert/000013.npy|sil ^ ueng1 k ai3 l an2 f ang2 r u3 x ian4 ^ ai2 x van1 ch uan2 zh ao4 sp sil
+./baker_waves/000014.wav|./baker_bert/000014.npy|sil ^ uo3 h uei2 ^ iou4 h eng1 h eng5 z uo3 h eng1 h eng5 sp sil
+./baker_waves/000015.wav|./baker_bert/000015.npy|sil ^ u2 ^ vn2 b ao2 n ai3 n ai5 t iao1 x van3 p i2 p a2 sp sil
+./baker_waves/000016.wav|./baker_bert/000016.npy|sil c ii3 ^ uai4 g uang2 b en3 ^ ie3 j iang1 ^ iou2 sh ao4 zh uang4 p ai4 zh ang2 g uan3 sp sil
+./baker_waves/000017.wav|./baker_bert/000017.npy|sil ^ iou4 m an2 ^ u3 n iao2 n iao3 sp z uo3 q iong2 g e1 x i1 x i1 sp sil
+./baker_waves/000018.wav|./baker_bert/000018.npy|sil ^ ian3 k uang4 k uan1 k uo4 ^ er2 d i1 ^ ai3 sp b i2 d uan3 ^ er2 k uan1 sp sil
+./baker_waves/000019.wav|./baker_bert/000019.npy|sil x ia2 p u3 x ian4 ^ ia2 ch eng2 zh en4 ^ u1 q i2 sp ^ ua3 ^ iao2 c uen1 sh uei3 ^ uei4 m eng2 zh ang3 sp sil
+./baker_waves/000020.wav|./baker_bert/000020.npy|sil h uo4 s ii1 ^ ian4 l u4 b ei4 x iou4 r u3 g ou1 x ing4 g an3 r e2 h uo3 sp sil
+./baker_waves/000021.wav|./baker_bert/000021.npy|sil ^ ie3 k e2 ^ i3 g ei3 b en2 ^ uei3 ^ van2 f an3 ^ ing4 ^ iou5 sp sil
+./baker_waves/000022.wav|./baker_bert/000022.npy|sil ^ iao2 l an2 p ai2 g ai4 ^ uei2 j ian4 ^ ing1 ^ er2 p ei4 f ang1 n ai2 f en3 sp sil
+./baker_waves/000023.wav|./baker_bert/000023.npy|sil ^ e4 ^ v4 l u2 ^ uan3 s u1 j v2 d i4 d a4 b ao4 ^ v3 sp sil
+./baker_waves/000024.wav|./baker_bert/000024.npy|sil ^ i3 x ia4 ^ uei2 x ve1 m an2 z ii5 g uan1 d ian3 zh ai1 ^ iao4 sp sil
+./baker_waves/000025.wav|./baker_bert/000025.npy|sil ch en2 ^ v2 l uo4 ^ ian4 sp b i4 ^ ve4 x iou1 h ua1 sp sil
+./baker_waves/000026.wav|./baker_bert/000026.npy|sil ^ er2 x v3 g uan4 ^ ing1 ^ i4 j iang1 ^ v2 m ing2 r iii4 ch u1 b in4 sp sil
+./baker_waves/000027.wav|./baker_bert/000027.npy|sil ^ a1 j iao1 ^ v2 b ai3 ^ uei4 sp g uei2 f en3 s ii1 sp k uang2 h uan1 sp sil
+./baker_waves/000028.wav|./baker_bert/000028.npy|sil f ang2 ^ u1 m ai3 m ai4 q i4 ^ ve1 h e2 sh ou1 t iao2 sp sil
+./baker_waves/000030.wav|./baker_bert/000030.npy|sil h ei1 x iong2 ch uang3 j in4 ^ uang2 m ing2 h uei1 j ia1 h ou4 ^ van4 m i4 sh iii2 sp sil
 ./baker_waves/000031.wav|./baker_bert/000031.npy|sil ^ u2 ^ ia4 j vn1 ^ v3 zh ang4 f u5 c ai4 k uei2 sp sil
 ./baker_waves/000032.wav|./baker_bert/000032.npy|sil ^ ia4 x iao1 s uan1 ^ ian2 ^ uei4 ^ uei1 x ian2 sp ^ i4 r ong2 ^ v2 sh uei3 sp sil
 ./baker_waves/000033.wav|./baker_bert/000033.npy|sil ^ van4 q iang2 b ei4 sh iii2 m ian2 ^ ua3 zh e1 ^ ian3 sh ang4 l e5 sp sil
