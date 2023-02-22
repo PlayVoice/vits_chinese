@@ -14,6 +14,8 @@ python setup.py build_ext --inplace
 
 BaiduYun：https://pan.baidu.com/s/1Cj4MnwFyZ0XZmTR6EpygbQ?pwd=yn60
 
+Or down from release
+
 prosody_model.pt To ./bert/prosody_model.pt
 
 vits_bert.pth To ./vits_bert.pth
