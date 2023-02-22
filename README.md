@@ -11,15 +11,15 @@ Based on BERT, NaturalSpeech, VITS
 
 ### Install
 
-pip install -r requirements.txt
+> pip install -r requirements.txt
 
-cd monotonic_align
+> cd monotonic_align
 
-python setup.py build_ext --inplace
+> python setup.py build_ext --inplace
 
 ### Infer with Pretrained model
 
-BaiduYun：https://pan.baidu.com/s/1Cj4MnwFyZ0XZmTR6EpygbQ?pwd=yn60
+BaiduYun: https://pan.baidu.com/s/1Cj4MnwFyZ0XZmTR6EpygbQ?pwd=yn60
 
 Google: https://drive.google.com/drive/folders/1sioiNpebOLyCmHURgOgJ7ppWI7b-7Rb5?usp=sharing
 
@@ -29,14 +29,22 @@ put prosody_model.pt To ./bert/prosody_model.pt
 
 put vits_bert_model.pth To ./vits_bert_model.pth
 
-python vits_infer.py
+> python vits_infer.py
 
-./vits_infer_out have the waves infered
+./vits_infer_out have the waves infered, listen !!!
 
 ### Train
-going
+download baker data: https://www.data-baker.com/data/index/TNtts/
 
-### Other data Link
+change sample rate of waves, and put waves to ./data/waves
+
+put 000001-010000.txt to ./data/000001-010000.txt
+
+> python vits_prepare.py
+
+> python train.py -c configs/bert_vits.json -m bert_vits
+
+### Anther data Link
 https://github.com/PlayVoice/HuaYan_TTS
 
 
