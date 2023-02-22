@@ -3,11 +3,11 @@
 Based on BERT, NaturalSpeech, VITS
 
 ### Features
-1, Hidden prosody embedding from BERT
+1, Hidden prosody embedding from BERT，自然的停顿
 
-2, Infer loss from NaturalSpeech
+2, Infer loss from NaturalSpeech，超低的发音错误
 
-3, Framework of VITS
+3, Framework of VITS，超好的音质
 
 ### Install
 
