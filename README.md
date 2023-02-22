@@ -3,11 +3,11 @@
 Based on BERT, NaturalSpeech, VITS
 
 ### Features
-1, Hidden prosody embedding from BERT，自然的停顿
+1, Hidden prosody embedding from BERT，get natural pauses in grammar
 
-2, Infer loss from NaturalSpeech，超低的发音错误
+2, Infer loss from NaturalSpeech，get less sound error
 
-3, Framework of VITS，超好的音质
+3, Framework of VITS，get high audio quality
 
 ### Install
 
@@ -21,11 +21,13 @@ python setup.py build_ext --inplace
 
 BaiduYun：https://pan.baidu.com/s/1Cj4MnwFyZ0XZmTR6EpygbQ?pwd=yn60
 
-Or down from release page
+Google: https://drive.google.com/drive/folders/1sioiNpebOLyCmHURgOgJ7ppWI7b-7Rb5?usp=sharing
+
+Or get from release page
 
 put prosody_model.pt To ./bert/prosody_model.pt
 
-put vits_bert.pth To ./vits_bert.pth
+put vits_bert_model.pth To ./vits_bert_model.pth
 
 python vits_infer.py
 
@@ -34,7 +36,7 @@ python vits_infer.py
 ### Train
 going
 
-### other data Link
+### Other data Link
 https://github.com/PlayVoice/HuaYan_TTS
 
 

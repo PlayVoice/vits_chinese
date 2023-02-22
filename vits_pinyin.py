@@ -13,6 +13,26 @@ class MyConverter(NeutralToneWith5Mixin, DefaultConverter):
     pass
 
 
+def is_chinese(uchar):
+    if uchar >= u'\u4e00' and uchar <= u'\u9fa5':
+        return True
+    else:
+        return False
+
+
+def clean_chinese(text: str):
+    text = text.strip()
+    text_clean = []
+    for char in text:
+        if (is_chinese(char)):
+            text_clean.append(char)
+        else:
+            if len(text_clean) > 1 and is_chinese(text_clean[-1]):
+                text_clean.append(',')
+    text_clean = ''.join(text_clean).strip(',')
+    return text_clean
+
+
 class VITS_PinYin:
     def __init__(self, bert_path, device):
         self.pinyin_parser = Pinyin(MyConverter())
@@ -31,13 +51,8 @@ class VITS_PinYin:
         return result, count_phone
 
     def chinese_to_phonemes(self, text):
+        text = clean_chinese(text)
         phonemes = ["sil"]
-        text = text.replace("、", ",")
-        text = text.replace("，", ",")
-        text = text.replace(":", ",")
-        text = text.replace(";", ",")
-        text = text.replace("!", ",")
-        text = text.replace("?", ",")
         chars = ['[PAD]']
         count_phone = []
         count_phone.append(1)
