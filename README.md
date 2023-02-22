@@ -2,6 +2,11 @@
 
 Based on BERT, NaturalSpeech, VITS
 
+### Features
+1, Hidden prosody embedding for BERT
+
+2, Infer loss add from NaturalSpeech
+
 ### Install
 
 pip install -r requirements.txt
