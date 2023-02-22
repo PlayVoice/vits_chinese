@@ -3,9 +3,11 @@
 Based on BERT, NaturalSpeech, VITS
 
 ### Features
-1, Hidden prosody embedding for BERT
+1, Hidden prosody embedding from BERT
 
-2, Infer loss add from NaturalSpeech
+2, Infer loss from NaturalSpeech
+
+3, Framework of VITS
 
 ### Install
 
