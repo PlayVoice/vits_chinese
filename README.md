@@ -53,7 +53,7 @@ put 000001-010000.txt to ./data/000001-010000.txt
 
 ![bert_lose](https://user-images.githubusercontent.com/16432329/220883346-c382bea2-1d2f-4a16-b797-2f9e2d2fb639.png)
 
-### Anther data Link
+### Another data Link
 https://github.com/PlayVoice/HuaYan_TTS
 
 ### Video text
