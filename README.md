@@ -46,7 +46,7 @@ change sample rate of waves, and put waves to ./data/waves
 
 put 000001-010000.txt to ./data/000001-010000.txt
 
-> python vits_prepare.py
+> python vits_prepare.py -c ./configs/bert_vits.json
 
 > python train.py -c configs/bert_vits.json -m bert_vits
 
