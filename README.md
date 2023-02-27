@@ -54,15 +54,15 @@ put 000001-010000.txt to ./data/000001-010000.txt
 ![bert_lose](https://user-images.githubusercontent.com/16432329/220883346-c382bea2-1d2f-4a16-b797-2f9e2d2fb639.png)
 
 ### Model compression based on knowledge distillation
-Student model has 3× speed of teacher model.
+Student model has 53M size and 3× speed of teacher model.
 
 To train:
 
 > python train.py -c configs/bert_vits_student.json -m bert_vits_student
 
-To infer, pretrained student model link:https://drive.google.com/file/d/1hTLWYEKH4GV9mQltrMyr3k2UKUo4chdp/view?usp=sharing
+To infer, get studet model at release page or 
 
-Also get studet model at release page.
+Google: :https://drive.google.com/file/d/1hTLWYEKH4GV9mQltrMyr3k2UKUo4chdp/view?usp=sharing
 
 > python vits_infer.py --config ./configs/bert_vits_student.json --model vits_bert_student.pth
 
