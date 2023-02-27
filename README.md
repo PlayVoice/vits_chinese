@@ -35,7 +35,7 @@ put prosody_model.pt To ./bert/prosody_model.pt
 
 put vits_bert_model.pth To ./vits_bert_model.pth
 
-> python vits_infer.py
+> python vits_infer.py --config ./configs/bert_vits.json --model vits_bert_model.pth
 
 ./vits_infer_out have the waves infered, listen !!!
 
@@ -54,7 +54,21 @@ put 000001-010000.txt to ./data/000001-010000.txt
 ![bert_lose](https://user-images.githubusercontent.com/16432329/220883346-c382bea2-1d2f-4a16-b797-2f9e2d2fb639.png)
 
 ### Model compression based on knowledge distillation
-Coming soon~~~
+Student model has 3× speed of teacher model.
+
+To train:
+
+> python train.py -c configs/bert_vits_student.json -m bert_vits_student
+
+To infer, pretrained student model link:https://drive.google.com/file/d/1hTLWYEKH4GV9mQltrMyr3k2UKUo4chdp/view?usp=sharing
+
+Also get studet model at release page.
+
+> python vits_infer.py --config ./configs/bert_vits_student.json --model vits_bert_student.pth
+
+You can use vits_istft as a student model too.
+
+https://github.com/PlayVoice/vits_chinese/tree/vits_istft
 
 ### Another data Link
 https://github.com/PlayVoice/HuaYan_TTS

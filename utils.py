@@ -15,6 +15,40 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging
 
 
+def load_class(full_class_name):
+    cls = None
+    if full_class_name in globals():
+        cls = globals()[full_class_name]
+    else:
+        if "." in full_class_name:
+            import importlib
+            module_name, cls_name = full_class_name.rsplit('.', 1)
+            mod = importlib.import_module(module_name)
+            cls = (getattr(mod, cls_name))
+    return cls
+
+
+def load_teacher(checkpoint_path, model):
+    assert os.path.isfile(checkpoint_path)
+    checkpoint_dict = torch.load(checkpoint_path, map_location='cpu')
+    saved_state_dict = checkpoint_dict['model']
+    if hasattr(model, 'module'):
+        state_dict = model.module.state_dict()
+    else:
+        state_dict = model.state_dict()
+    new_state_dict = {}
+    for k, v in state_dict.items():
+        if k.startswith('enc_q') or k.startswith('flow'):
+            new_state_dict[k] = saved_state_dict[k]
+        else:
+            new_state_dict[k] = v
+    if hasattr(model, 'module'):
+        model.module.load_state_dict(new_state_dict)
+    else:
+        model.load_state_dict(new_state_dict)
+    return model
+
+
 def load_checkpoint(checkpoint_path, model, optimizer=None):
     assert os.path.isfile(checkpoint_path)
     checkpoint_dict = torch.load(checkpoint_path, map_location="cpu")
