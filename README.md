@@ -89,7 +89,7 @@ https://github.com/jaywalnut310/vits
 
 ### Voice Clone
 
-![vits_clone](https://user-images.githubusercontent.com/16432329/223632373-36353fde-c843-4245-9d05-6b8c52718799.jpg)
+![vits_clone](https://user-images.githubusercontent.com/16432329/223632792-519178d4-382d-4df4-93d7-088b870cfc42.jpg)
 
 TODO ~
 
