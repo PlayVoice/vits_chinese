@@ -92,6 +92,10 @@ https://github.com/jaywalnut310/vits
 TODO ~
 
 ### Reference For Voice Clone
+https://github.com/CODEJIN/HierSpeech
+
+[HierSpeech: Bridging the Gap between Text andSpeech by Hierarchical Variational Inference usingSelf-supervised Representations for Speech Synthesis](https://openreview.net/forum?id=awdyRVnfQKX)
+
 [Transfer Learning Framework for Low-Resource Text-to-Speech using a Large-Scale Unlabeled Speech Corpus](https://github.com/hcy71o/TransferTTS)
 
 [AdaVITS: Tiny VITS for Low Computing Resource Speaker Adaptation](https://arxiv.org/abs/2206.00208)
