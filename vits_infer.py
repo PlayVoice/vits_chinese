@@ -47,7 +47,7 @@ net_g.to(device)
 os.makedirs("./vits_infer_out/", exist_ok=True)
 if __name__ == "__main__":
     n = 0
-    fo = open("vits_infer_item.txt", "r+")
+    fo = open("vits_infer_item.txt", "r+", encoding='utf-8')
     while (True):
         try:
             item = fo.readline().strip()
