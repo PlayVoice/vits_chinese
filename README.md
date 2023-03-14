@@ -97,10 +97,6 @@ TODO ~
 ### Reference For Voice Clone
 [Speak, Read and Prompt:High-Fidelity Text-to-Speech with Minimal Supervision](https://arxiv.org/abs/2302.03540)
 
-https://github.com/collabora/spear-tts-pytorch
-
-https://github.com/CODEJIN/HierSpeech
-
 [HierSpeech: Bridging the Gap between Text andSpeech by Hierarchical Variational Inference usingSelf-supervised Representations for Speech Synthesis](https://openreview.net/forum?id=awdyRVnfQKX)
 
 [Transfer Learning Framework for Low-Resource Text-to-Speech using a Large-Scale Unlabeled Speech Corpus](https://github.com/hcy71o/TransferTTS)
@@ -110,3 +106,7 @@ https://github.com/CODEJIN/HierSpeech
 [Adapter-Based Extension of Multi-Speaker Text-to-Speech Model for New Speakers](https://arxiv.org/abs/2211.00585)
 
 [Residual Adapters for Few-Shot Text-to-Speech Speaker Adaptation](https://arxiv.org/abs/2210.15868)
+
+https://github.com/collabora/spear-tts-pytorch
+
+https://github.com/CODEJIN/HierSpeech
