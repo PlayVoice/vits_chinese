@@ -70,9 +70,6 @@ You can use vits_istft as a student model too.
 
 https://github.com/PlayVoice/vits_chinese/tree/vits_istft
 
-### Another data Link
-https://github.com/PlayVoice/HuaYan_TTS
-
 ### Video text
 > 天空呈现的透心的蓝，像极了当年。总在这样的时候，透过窗棂，心，在天空里无尽的游弋！柔柔的，浓浓的，痴痴的风，牵引起心底灵动的思潮；情愫悠悠，思情绵绵，风里默坐，红尘中的浅醉，诗词中的优柔，任那自在飞花轻似梦的情怀，裁一束霓衣，织就清浅淡薄的安寂。
 > 
