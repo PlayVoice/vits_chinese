@@ -58,7 +58,7 @@ if __name__ == "__main__":
     # device = torch.device("cpu")
     prosody = TTSProsody("./bert", device)
 
-    fo = open(f"./data/000001-010000.txt", "r+")
+    fo = open(f"./data/000001-010000.txt", "r+", encoding='utf-8')
     scrips = []
     while (True):
         try:
