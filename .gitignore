@@ -1,0 +1,14 @@
+.idea
+__pycache__/
+data/berts
+data/temps
+data/waves
+data/prepare.log
+logs
+vits_bert_model.pth
+filelists/
+monotonic_align/core.c
+monotonic_align/__pycache__
+monotonic_align/build
+monotonic_align/monotonic_align
+bert/prosody_model.pt

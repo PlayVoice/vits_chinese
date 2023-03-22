@@ -118,6 +118,7 @@ class TextAudioCollate():
         max_spec_len = max([x[0].size(1) for x in batch])
         max_wav_len = max([x[1].size(1) for x in batch])
         max_text_len = max([len(x[2]) for x in batch])
+        max_bert_len = max([len(x[3]) for x in batch])
 
         spec_lengths = torch.LongTensor(len(batch))
         wav_lengths = torch.LongTensor(len(batch))
@@ -125,8 +126,9 @@ class TextAudioCollate():
 
         spec_padded = torch.FloatTensor(len(batch), batch[0][0].size(0), max_spec_len)
         wav_padded = torch.FloatTensor(len(batch), 1, max_wav_len)
-        text_padded = torch.LongTensor(len(batch), max_text_len)
-        bert_padded = torch.FloatTensor(len(batch), max_text_len, 256)
+        text_padded = torch.LongTensor(len(batch), max_bert_len)
+        # bert_padded = torch.FloatTensor(len(batch), max_text_len, 256)
+        bert_padded = torch.FloatTensor(len(batch), max_bert_len, 256)
 
         spec_padded.zero_()
         wav_padded.zero_()
