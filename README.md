@@ -42,7 +42,7 @@ put vits_bert_model.pth To ./vits_bert_model.pth
 ### Train
 download baker data: https://www.data-baker.com/data/index/TNtts/
 
-change sample rate of waves, and put waves to ./data/waves
+change sample rate of waves to **16kHz**, and put waves to ./data/waves
 
 put 000001-010000.txt to ./data/000001-010000.txt
 
