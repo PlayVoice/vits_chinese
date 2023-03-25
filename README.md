@@ -43,6 +43,20 @@ put vits_bert_model.pth To ./vits_bert_model.pth
 
 > python vits_infer_stream.py --config ./configs/bert_vits.json --model vits_bert_model.pth
 
+### Text normlize
+
+> pip install WeTextProcessing
+
+> from tn.chinese.normalizer import Normalizer
+
+> normalizer = Normalizer()
+
+> ...
+
+> item = fo.readline().strip()
+
+> item = normalizer.normalize(item)
+
 ### Train
 download baker data: https://www.data-baker.com/data/index/TNtts/
 
@@ -85,6 +99,8 @@ https://github.com/PlayVoice/vits_chinese/tree/vits_istft
 [Microsoft's NaturalSpeech: End-to-End Text to Speech Synthesis with Human-Level Quality](https://arxiv.org/abs/2205.04421)
 
 https://github.com/Executedone/Chinese-FastSpeech2
+
+https://github.com/wenet-e2e/WeTextProcessing
 
 https://github.com/jaywalnut310/vits
 
