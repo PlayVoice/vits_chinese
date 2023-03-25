@@ -39,6 +39,10 @@ put vits_bert_model.pth To ./vits_bert_model.pth
 
 ./vits_infer_out have the waves infered, listen !!!
 
+### Infer with chunk wave streaming out
+
+> python vits_infer_stream.py --config ./configs/bert_vits.json --model vits_bert_model.pth
+
 ### Train
 download baker data: https://www.data-baker.com/data/index/TNtts/
 
