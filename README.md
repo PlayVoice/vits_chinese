@@ -41,6 +41,8 @@ put vits_bert_model.pth To ./vits_bert_model.pth
 
 ### Infer with chunk wave streaming out
 
+as key paramter, ***hop_frame = ∑decoder.ups.padding***
+
 > python vits_infer_stream.py --config ./configs/bert_vits.json --model vits_bert_model.pth
 
 ### Text normlize
