@@ -239,6 +239,7 @@ pinyin_dict = {
     "mo": ("m", "o"),
     "mou": ("m", "ou"),
     "mu": ("m", "u"),
+    "n": ("^", "en"),
     "na": ("n", "a"),
     "nai": ("n", "ai"),
     "nan": ("n", "an"),

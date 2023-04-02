@@ -36,7 +36,6 @@ def main():
     assert torch.cuda.is_available(), "CPU training is not allowed."
 
     n_gpus = torch.cuda.device_count()
-    # n_gpus = 1
     os.environ["MASTER_ADDR"] = "localhost"
     os.environ["MASTER_PORT"] = "40000"
 
@@ -121,14 +120,16 @@ def run(rank, n_gpus, hps):
 
     try:
         teacher = getattr(hps.train, "teacher")
-        # logger.info(f"Has teacher model: {teacher}")
+        if rank == 0:
+            logger.info(f"Has teacher model: {teacher}")
 
         net_g = DDP(net_g, device_ids=[rank], find_unused_parameters=True)
         utils.load_teacher(teacher, net_g)
     except:
 
         net_g = DDP(net_g, device_ids=[rank])
-        # logger.info("no teacher model.")
+        if rank == 0:
+            logger.info("no teacher model.")
 
     net_d = DDP(net_d, device_ids=[rank])
 
@@ -185,7 +186,7 @@ def run(rank, n_gpus, hps):
 
 
 def train_and_evaluate(
-        rank, epoch, hps, nets, optims, schedulers, scaler, loaders, logger, writers
+    rank, epoch, hps, nets, optims, schedulers, scaler, loaders, logger, writers
 ):
     net_g, net_d = nets
     optim_g, optim_d = optims
