@@ -1,4 +1,10 @@
-### Best TTS based on BERT and VITS with some Natural Speech Features Of Microsoft
+# Best practice TTS based on BERT and VITS with some Natural Speech Features Of Microsoft
+
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/maxmax20160403/vits_chinese)
+<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/PlayVoice/vits_chinese">
+<img alt="GitHub forks" src="https://img.shields.io/github/forks/PlayVoice/vits_chinese">
+<img alt="GitHub issues" src="https://img.shields.io/github/issues/PlayVoice/vits_chinese">
+<img alt="GitHub" src="https://img.shields.io/github/license/PlayVoice/vits_chinese">
 
 https://user-images.githubusercontent.com/16432329/220678182-4775dec8-9229-4578-870f-2eebc3a5d660.mp4
 
