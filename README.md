@@ -18,6 +18,8 @@ Based on BERT, NaturalSpeech, VITS
 
 3, Framework of VITS，get high audio quality
 
+:heartpulse::heartpulse::heartpulse:Tip: It is recommended to use **Infer Loss** fine-tune model after base model trained, and freeze **PosteriorEncoder** during fine-tuning.
+
 ### Online demo
 https://huggingface.co/spaces/maxmax20160403/vits_chinese
 
