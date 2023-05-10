@@ -22,12 +22,7 @@ def log(info: str):
 
 def get_spec(hps, filename):
     audio, sampling_rate = load_wav_to_torch(filename)
-    if sampling_rate != hps.data.sampling_rate:
-        raise ValueError(
-            "{} {} SR doesn't match target {} SR".format(
-                sampling_rate, hps.data.sampling_rate
-            )
-        )
+    assert sampling_rate == hps.data.sampling_rate, f"{sampling_rate} is not {hps.data.sampling_rate}"
     audio_norm = audio / hps.data.max_wav_value
     audio_norm = audio_norm.unsqueeze(0)
     spec = spectrogram_torch(
