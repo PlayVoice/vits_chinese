@@ -9,6 +9,7 @@ import argparse
 import itertools
 import math
 import torch
+import tqdm
 from torch import nn, optim
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
@@ -200,7 +201,11 @@ def train_and_evaluate(
 
     net_g.train()
     net_d.train()
-    for batch_idx, (x, x_lengths, bert, spec, spec_lengths, y, y_lengths) in enumerate(train_loader):
+    if rank == 0:
+        loader = tqdm.tqdm(train_loader, desc='Loading train data')
+    else:
+        loader = train_loader
+    for batch_idx, (x, x_lengths, bert, spec, spec_lengths, y, y_lengths) in enumerate(loader):
         x, x_lengths = x.cuda(rank, non_blocking=True), x_lengths.cuda(
             rank, non_blocking=True
         )
