@@ -35,10 +35,13 @@ cdef void maximum_path_each(int[:,::1] path, float[:,::1] value, int t_y, int t_
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cpdef void maximum_path_c(int[:,:,::1] paths, float[:,:,::1] values, int[::1] t_ys, int[::1] t_xs) nogil:
+cdef void maximum_path_cc(int[:,:,::1] paths, float[:,:,::1] values, int[::1] t_ys, int[::1] t_xs) nogil:
   cdef int b = paths.shape[0]
   cdef int i
-  for i in prange(b, nogil=True):
-    maximum_path_each(paths[i], values[i], t_ys[i], t_xs[i])
-
-
+  with nogil:
+    for i in prange(b):
+      maximum_path_each(paths[i], values[i], t_ys[i], t_xs[i])
+      
+# Python接口
+def maximum_path_c(py_paths, py_values, py_t_ys, py_t_xs):
+  maximum_path_cc(py_paths, py_values, py_t_ys, py_t_xs)
