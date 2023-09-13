@@ -6,6 +6,7 @@
 <img alt="GitHub issues" src="https://img.shields.io/github/issues/PlayVoice/vits_chinese">
 <img alt="GitHub" src="https://img.shields.io/github/license/PlayVoice/vits_chinese">
 
+# 这是一个用于TTS算法学习的项目，如果您在寻找直接用于生产的TTS，本项目可能不适合您！
 https://user-images.githubusercontent.com/16432329/220678182-4775dec8-9229-4578-870f-2eebc3a5d660.mp4
 
 
