@@ -82,6 +82,38 @@ put 000001-010000.txt to ./data/000001-010000.txt
 
 ![bert_lose](https://user-images.githubusercontent.com/16432329/220883346-c382bea2-1d2f-4a16-b797-2f9e2d2fb639.png)
 
+### 额外说明
+
+原始标注为
+``` c
+000001	卡尔普#2陪外孙#1玩滑梯#4。
+  ka2 er2 pu3 pei2 wai4 sun1 wan2 hua2 ti1
+000002	假语村言#2别再#1拥抱我#4。
+  jia2 yu3 cun1 yan2 bie2 zai4 yong1 bao4 wo3
+```
+
+需要标注为，BERT需要汉字 `卡尔普陪外孙玩滑梯。` (包括标点)，TTS需要声韵母 `sil k a2 ^ er2 p u3 p ei2 ^ uai4 s uen1 ^ uan2 h ua2 t i1 sp sil`
+``` c
+000001	卡尔普陪外孙玩滑梯。
+  ka2 er2 pu3 pei2 wai4 sun1 wan2 hua2 ti1
+  sil k a2 ^ er2 p u3 p ei2 ^ uai4 s uen1 ^ uan2 h ua2 t i1 sp sil
+000002	假语村言别再拥抱我。
+  jia2 yu3 cun1 yan2 bie2 zai4 yong1 bao4 wo3
+  sil j ia2 ^ v3 c uen1 ^ ian2 b ie2 z ai4 ^ iong1 b ao4 ^ uo3 sp sil
+```
+
+训练标注为
+```
+./data/wavs/000001.wav|./data/mels/000001.pt|./data/berts/000001.npy|sil k a2 ^ er2 p u3 p ei2 ^ uai4 s uen1 ^ uan2 h ua2 t i1 sp sil
+./data/wavs/000002.wav|./data/mels/000002.pt|./data/berts/000002.npy|sil j ia2 ^ v3 c uen1 ^ ian2 b ie2 z ai4 ^ iong1 b ao4 ^ uo3 sp sil
+```
+
+遇到这句话会出错
+```
+002365	这图#2难不成#2是#1Ｐ过的#4？
+  zhe4 tu2 nan2 bu4 cheng2 shi4 P IY1 guo4 de5
+```
+
 ### Model compression based on knowledge distillation
 Student model has 53M size and 3× speed of teacher model.
 
