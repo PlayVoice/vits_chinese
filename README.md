@@ -42,27 +42,38 @@ put [prosody_model.pt](https://github.com/PlayVoice/vits_chinese/releases/tag/v1
 
 put [vits_bert_model.pth](https://github.com/PlayVoice/vits_chinese/releases/tag/v1.0) To ./vits_bert_model.pth
 
-> python vits_infer.py --config ./configs/bert_vits.json --model vits_bert_model.pth
+```
+python vits_infer.py --config ./configs/bert_vits.json --model vits_bert_model.pth
+```
 
 ./vits_infer_out have the waves infered, listen !!!
 
 ### Infer with chunk wave streaming out
 
-as key paramter, ***hop_frame = ∑decoder.ups.padding***
+as key paramter, ***hop_frame = ∑decoder.ups.padding*** :heartpulse:
 
-> python vits_infer_stream.py --config ./configs/bert_vits.json --model vits_bert_model.pth
+```
+python vits_infer_stream.py --config ./configs/bert_vits.json --model vits_bert_model.pth
+```
 
 ### Train
 download baker data [https://aistudio.baidu.com/datasetdetail/36741](https://aistudio.baidu.com/datasetdetail/36741), more info: https://www.data-baker.com/data/index/TNtts/
 
 change sample rate of waves to **16kHz**, and put waves to ./data/waves
 
+```
+python vits_resample.py -w [input path]:[./data/Wave/] -o ./data/waves -s 16000
+```
+
 put 000001-010000.txt to ./data/000001-010000.txt
 
-> python vits_prepare.py -c ./configs/bert_vits.json
+```
+python vits_prepare.py -c ./configs/bert_vits.json
+```
 
-> python train.py -c configs/bert_vits.json -m bert_vits
-
+```
+python train.py -c configs/bert_vits.json -m bert_vits
+```
 
 ![bert_lose](https://user-images.githubusercontent.com/16432329/220883346-c382bea2-1d2f-4a16-b797-2f9e2d2fb639.png)
 
@@ -105,7 +116,7 @@ put 000001-010000.txt to ./data/000001-010000.txt
 浅浅 qian3 qian3
 ```
 
-### 数字播报
+### 数字播报支持
 已支持，基于WeNet开源社区[WeTextProcessing](https://github.com/wenet-e2e/WeTextProcessing)；当然，不可能是完美的
 
 ### Model compression based on knowledge distillation
@@ -113,13 +124,15 @@ Student model has 53M size and 3× speed of teacher model.
 
 To train:
 
-> python train.py -c configs/bert_vits_student.json -m bert_vits_student
+```
+python train.py -c configs/bert_vits_student.json -m bert_vits_student
+```
 
-To infer, get studet model at release page or 
+To infer, get [studet model](https://github.com/PlayVoice/vits_chinese/releases/tag/v2.0) at release page
 
-Google: :https://drive.google.com/file/d/1hTLWYEKH4GV9mQltrMyr3k2UKUo4chdp/view?usp=sharing
-
-> python vits_infer.py --config ./configs/bert_vits_student.json --model vits_bert_student.pth
+```
+python vits_infer.py --config ./configs/bert_vits_student.json --model vits_bert_student.pth
+```
 
 ### Video text
 > 天空呈现的透心的蓝，像极了当年。总在这样的时候，透过窗棂，心，在天空里无尽的游弋！柔柔的，浓浓的，痴痴的风，牵引起心底灵动的思潮；情愫悠悠，思情绵绵，风里默坐，红尘中的浅醉，诗词中的优柔，任那自在飞花轻似梦的情怀，裁一束霓衣，织就清浅淡薄的安寂。
