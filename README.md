@@ -1,5 +1,12 @@
-### Best TTS based on BERT and VITS with some Natural Speech Features Of Microsoft
+# Best practice TTS based on BERT and VITS with some Natural Speech Features Of Microsoft
 
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/maxmax20160403/vits_chinese)
+<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/PlayVoice/vits_chinese">
+<img alt="GitHub forks" src="https://img.shields.io/github/forks/PlayVoice/vits_chinese">
+<img alt="GitHub issues" src="https://img.shields.io/github/issues/PlayVoice/vits_chinese">
+<img alt="GitHub" src="https://img.shields.io/github/license/PlayVoice/vits_chinese">
+
+# 这是一个用于TTS算法学习的项目，如果您在寻找直接用于生产的TTS，本项目可能不适合您！
 https://user-images.githubusercontent.com/16432329/220678182-4775dec8-9229-4578-870f-2eebc3a5d660.mp4
 
 
@@ -11,6 +18,8 @@ Based on BERT, NaturalSpeech, VITS
 2, Infer loss from NaturalSpeech，get less sound error
 
 3, Framework of VITS，get high audio quality
+
+:heartpulse::heartpulse::heartpulse:Tip: It is recommended to use **Infer Loss** fine-tune model after base model trained, and freeze **PosteriorEncoder** during fine-tuning.
 
 ### Online demo
 https://huggingface.co/spaces/maxmax20160403/vits_chinese
@@ -39,10 +48,30 @@ put vits_bert_model.pth To ./vits_bert_model.pth
 
 ./vits_infer_out have the waves infered, listen !!!
 
+### Infer with chunk wave streaming out
+
+as key paramter, ***hop_frame = ∑decoder.ups.padding***
+
+> python vits_infer_stream.py --config ./configs/bert_vits.json --model vits_bert_model.pth
+
+### Text normlize
+
+> pip install WeTextProcessing
+
+> from tn.chinese.normalizer import Normalizer
+
+> normalizer = Normalizer()
+
+> ...
+
+> item = fo.readline().strip()
+
+> item = normalizer.normalize(item)
+
 ### Train
 download baker data: https://www.data-baker.com/data/index/TNtts/
 
-change sample rate of waves, and put waves to ./data/waves
+change sample rate of waves to **16kHz**, and put waves to ./data/waves
 
 put 000001-010000.txt to ./data/000001-010000.txt
 
@@ -52,6 +81,38 @@ put 000001-010000.txt to ./data/000001-010000.txt
 
 
 ![bert_lose](https://user-images.githubusercontent.com/16432329/220883346-c382bea2-1d2f-4a16-b797-2f9e2d2fb639.png)
+
+### 额外说明
+
+原始标注为
+``` c
+000001	卡尔普#2陪外孙#1玩滑梯#4。
+  ka2 er2 pu3 pei2 wai4 sun1 wan2 hua2 ti1
+000002	假语村言#2别再#1拥抱我#4。
+  jia2 yu3 cun1 yan2 bie2 zai4 yong1 bao4 wo3
+```
+
+需要标注为，BERT需要汉字 `卡尔普陪外孙玩滑梯。` (包括标点)，TTS需要声韵母 `sil k a2 ^ er2 p u3 p ei2 ^ uai4 s uen1 ^ uan2 h ua2 t i1 sp sil`
+``` c
+000001	卡尔普陪外孙玩滑梯。
+  ka2 er2 pu3 pei2 wai4 sun1 wan2 hua2 ti1
+  sil k a2 ^ er2 p u3 p ei2 ^ uai4 s uen1 ^ uan2 h ua2 t i1 sp sil
+000002	假语村言别再拥抱我。
+  jia2 yu3 cun1 yan2 bie2 zai4 yong1 bao4 wo3
+  sil j ia2 ^ v3 c uen1 ^ ian2 b ie2 z ai4 ^ iong1 b ao4 ^ uo3 sp sil
+```
+
+训练标注为
+```
+./data/wavs/000001.wav|./data/mels/000001.pt|./data/berts/000001.npy|sil k a2 ^ er2 p u3 p ei2 ^ uai4 s uen1 ^ uan2 h ua2 t i1 sp sil
+./data/wavs/000002.wav|./data/mels/000002.pt|./data/berts/000002.npy|sil j ia2 ^ v3 c uen1 ^ ian2 b ie2 z ai4 ^ iong1 b ao4 ^ uo3 sp sil
+```
+
+遇到这句话会出错
+```
+002365	这图#2难不成#2是#1Ｐ过的#4？
+  zhe4 tu2 nan2 bu4 cheng2 shi4 P IY1 guo4 de5
+```
 
 ### Model compression based on knowledge distillation
 Student model has 53M size and 3× speed of teacher model.
@@ -80,19 +141,16 @@ https://github.com/PlayVoice/vits_chinese/tree/vits_istft
 ### Reference For TTS
 [Microsoft's NaturalSpeech: End-to-End Text to Speech Synthesis with Human-Level Quality](https://arxiv.org/abs/2205.04421)
 
-https://github.com/Executedone/Chinese-FastSpeech2
+https://github.com/Executedone/Chinese-FastSpeech2 **bert prosody**
+
+https://github.com/wenet-e2e/WeTextProcessing
 
 https://github.com/jaywalnut310/vits
 
-### Voice Clone
-
-![vits_clone](https://user-images.githubusercontent.com/16432329/223632792-519178d4-382d-4df4-93d7-088b870cfc42.jpg)
-
-TODO ~
-
-
-### Reference For Voice Clone
+### Info For Voice Clone
 [Speak, Read and Prompt:High-Fidelity Text-to-Speech with Minimal Supervision](https://arxiv.org/abs/2302.03540)
+
+[SNAC : Speaker-normalized Affine Coupling Layer in Flow-based Architecture for Zero-Shot Multi-Speaker Text-to-Speech](https://arxiv.org/pdf/2211.16866.pdf)
 
 [HierSpeech: Bridging the Gap between Text andSpeech by Hierarchical Variational Inference usingSelf-supervised Representations for Speech Synthesis](https://openreview.net/forum?id=awdyRVnfQKX)
 
@@ -107,3 +165,5 @@ TODO ~
 https://github.com/collabora/spear-tts-pytorch
 
 https://github.com/CODEJIN/HierSpeech
+
+https://github.com/hcy71o/SNAC
