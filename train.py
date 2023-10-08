@@ -1,4 +1,5 @@
 import logging
+
 logging.getLogger('numba').setLevel(logging.WARNING)
 logging.getLogger('matplotlib').setLevel(logging.WARNING)
 
@@ -8,6 +9,7 @@ import argparse
 import itertools
 import math
 import torch
+import tqdm
 from torch import nn, optim
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
@@ -24,7 +26,7 @@ from models import MultiPeriodDiscriminator
 from losses import generator_loss, discriminator_loss, feature_loss, kl_loss
 from mel_processing import mel_spectrogram_torch, spec_to_mel_torch
 from text.symbols import symbols
-
+import platform
 
 torch.backends.cudnn.benchmark = True
 global_step = 0
@@ -58,8 +60,9 @@ def run(rank, n_gpus, hps):
         writer = SummaryWriter(log_dir=hps.model_dir)
         writer_eval = SummaryWriter(log_dir=os.path.join(hps.model_dir, "eval"))
 
+    backend_str = (platform.system().lower() == "windows") and "gloo" or "nccl"
     dist.init_process_group(
-        backend="nccl", init_method="env://", world_size=n_gpus, rank=rank
+        backend=backend_str, init_method="env://", world_size=n_gpus, rank=rank
     )
     torch.manual_seed(hps.train.seed)
     torch.cuda.set_device(rank)
@@ -78,7 +81,7 @@ def run(rank, n_gpus, hps):
     collate_fn = TextAudioCollate()
     train_loader = DataLoader(
         train_dataset,
-        num_workers=2,
+        num_workers=8,
         shuffle=False,
         pin_memory=True,
         collate_fn=collate_fn,
@@ -88,7 +91,7 @@ def run(rank, n_gpus, hps):
         eval_dataset = TextAudioLoader(hps.data.validation_files, hps.data)
         eval_loader = DataLoader(
             eval_dataset,
-            num_workers=2,
+            num_workers=8,
             shuffle=False,
             batch_size=hps.train.batch_size,
             pin_memory=True,
@@ -118,15 +121,17 @@ def run(rank, n_gpus, hps):
 
     try:
         teacher = getattr(hps.train, "teacher")
-        logger.info(f"Has teacher model: {teacher}")
+        if rank == 0:
+            logger.info(f"Has teacher model: {teacher}")
 
         net_g = DDP(net_g, device_ids=[rank], find_unused_parameters=True)
         utils.load_teacher(teacher, net_g)
     except:
 
         net_g = DDP(net_g, device_ids=[rank])
-        logger.info("no teacher model.")
-    
+        if rank == 0:
+            logger.info("no teacher model.")
+
     net_d = DDP(net_d, device_ids=[rank])
 
     try:
@@ -196,7 +201,11 @@ def train_and_evaluate(
 
     net_g.train()
     net_d.train()
-    for batch_idx, (x, x_lengths, bert, spec, spec_lengths, y, y_lengths) in enumerate(train_loader):
+    if rank == 0:
+        loader = tqdm.tqdm(train_loader, desc='Loading train data')
+    else:
+        loader = train_loader
+    for batch_idx, (x, x_lengths, bert, spec, spec_lengths, y, y_lengths) in enumerate(loader):
         x, x_lengths = x.cuda(rank, non_blocking=True), x_lengths.cuda(
             rank, non_blocking=True
         )
@@ -209,8 +218,8 @@ def train_and_evaluate(
         bert = bert.cuda(rank, non_blocking=True)
 
         with autocast(enabled=hps.train.fp16_run):
-            y_hat, l_length, attn, ids_slice, x_mask, z_mask,\
-                (z, z_p, z_r, m_p, logs_p, m_q, logs_q) = net_g(x, x_lengths, bert, spec, spec_lengths)
+            y_hat, l_length, attn, ids_slice, x_mask, z_mask, \
+            (z, z_p, z_r, m_p, logs_p, m_q, logs_q) = net_g(x, x_lengths, bert, spec, spec_lengths)
 
             mel = spec_to_mel_torch(
                 spec,
