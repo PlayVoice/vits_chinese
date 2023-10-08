@@ -21,7 +21,7 @@ Based on BERT, NaturalSpeech, VITS
 
 :heartpulse::heartpulse::heartpulse:Tip: It is recommended to use **Infer Loss** fine-tune model after base model trained, and freeze **PosteriorEncoder** during fine-tuning.
 
-**意思就是：初步训练时，不用loss_kl_r；训练好后，添加loss_kl_r继续训练，稍微训练一下就行了，如果音频质量差，可以给loss_kl_r乘以一个小于1的系数、降低loss_kl_r对模型的贡献；继续训练时，可以尝试冻结音频编码器PosteriorEncoder；总之，玩法很多，需要多尝试！**
+**意思就是：初步训练时，不用loss_kl_r；训练好后，添加loss_kl_r继续训练，稍微训练一下就行了，如果音频质量差，可以给loss_kl_r乘以一个小于1的系数、降低loss_kl_r对模型的贡献；继续训练时，可以尝试冻结音频编码器Posterior Encoder；总之，玩法很多，需要多尝试！**
 
 ### Online demo
 https://huggingface.co/spaces/maxmax20160403/vits_chinese
@@ -55,20 +55,6 @@ put vits_bert_model.pth To ./vits_bert_model.pth
 as key paramter, ***hop_frame = ∑decoder.ups.padding***
 
 > python vits_infer_stream.py --config ./configs/bert_vits.json --model vits_bert_model.pth
-
-### Text normlize
-
-> pip install WeTextProcessing
-
-> from tn.chinese.normalizer import Normalizer
-
-> normalizer = Normalizer()
-
-> ...
-
-> item = fo.readline().strip()
-
-> item = normalizer.normalize(item)
 
 ### Train
 download baker data: https://www.data-baker.com/data/index/TNtts/
@@ -122,6 +108,9 @@ put 000001-010000.txt to ./data/000001-010000.txt
 渐渐 jian4 jian4
 浅浅 qian3 qian3
 ```
+
+### 数字播报
+已支持，基于WeNet开源社区[WeTextProcessing](https://github.com/wenet-e2e/WeTextProcessing)；当然，不可能是完美的
 
 ### Model compression based on knowledge distillation
 Student model has 53M size and 3× speed of teacher model.
