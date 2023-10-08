@@ -6,7 +6,7 @@
 <img alt="GitHub issues" src="https://img.shields.io/github/issues/PlayVoice/vits_chinese">
 <img alt="GitHub" src="https://img.shields.io/github/license/PlayVoice/vits_chinese">
 
-# 这是一个用于TTS算法学习的项目，如果您在寻找直接用于生产的TTS，本项目可能不适合您！
+## 这是一个用于TTS算法学习的项目，如果您在寻找直接用于生产的TTS，本项目可能不适合您！
 https://user-images.githubusercontent.com/16432329/220678182-4775dec8-9229-4578-870f-2eebc3a5d660.mp4
 
 
@@ -20,6 +20,8 @@ Based on BERT, NaturalSpeech, VITS
 3, Framework of VITS，get high audio quality
 
 :heartpulse::heartpulse::heartpulse:Tip: It is recommended to use **Infer Loss** fine-tune model after base model trained, and freeze **PosteriorEncoder** during fine-tuning.
+
+**意思就是：初步训练时，不用loss_kl_r；训练好后，添加loss_kl_r继续训练，稍微训练一下就行了，如果音频质量差，可以给loss_kl_r乘以一个小于1的系数、降低loss_kl_r对模型的贡献；继续训练时，可以尝试冻结音频编码器PosteriorEncoder；总之，玩法很多，需要多尝试！**
 
 ### Online demo
 https://huggingface.co/spaces/maxmax20160403/vits_chinese
@@ -153,24 +155,3 @@ https://github.com/Executedone/Chinese-FastSpeech2 **bert prosody**
 https://github.com/wenet-e2e/WeTextProcessing
 
 https://github.com/jaywalnut310/vits
-
-### Info For Voice Clone
-[Speak, Read and Prompt:High-Fidelity Text-to-Speech with Minimal Supervision](https://arxiv.org/abs/2302.03540)
-
-[SNAC : Speaker-normalized Affine Coupling Layer in Flow-based Architecture for Zero-Shot Multi-Speaker Text-to-Speech](https://arxiv.org/pdf/2211.16866.pdf)
-
-[HierSpeech: Bridging the Gap between Text andSpeech by Hierarchical Variational Inference usingSelf-supervised Representations for Speech Synthesis](https://openreview.net/forum?id=awdyRVnfQKX)
-
-[Transfer Learning Framework for Low-Resource Text-to-Speech using a Large-Scale Unlabeled Speech Corpus](https://github.com/hcy71o/TransferTTS)
-
-[AdaVITS: Tiny VITS for Low Computing Resource Speaker Adaptation](https://arxiv.org/abs/2206.00208)
-
-[Adapter-Based Extension of Multi-Speaker Text-to-Speech Model for New Speakers](https://arxiv.org/abs/2211.00585)
-
-[Residual Adapters for Few-Shot Text-to-Speech Speaker Adaptation](https://arxiv.org/abs/2210.15868)
-
-https://github.com/collabora/spear-tts-pytorch
-
-https://github.com/CODEJIN/HierSpeech
-
-https://github.com/hcy71o/SNAC
