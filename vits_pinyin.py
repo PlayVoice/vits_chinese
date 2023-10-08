@@ -1,5 +1,7 @@
 import re
 
+from tn.chinese.normalizer import Normalizer
+
 from pypinyin import Style
 from pypinyin.contrib.neutral_tone import NeutralToneWith5Mixin
 from pypinyin.converter import DefaultConverter
@@ -54,6 +56,7 @@ class VITS_PinYin:
         load_pinyin_dict()
         self.pinyin_parser = Pinyin(MyConverter())
         self.prosody = TTSProsody(bert_path, device)
+        self.normalizer = Normalizer()
 
     def get_phoneme4pinyin(self, pinyins):
         result = []
@@ -68,6 +71,7 @@ class VITS_PinYin:
         return result, count_phone
 
     def chinese_to_phonemes(self, text):
+        text = self.normalizer.normalize(text)
         text = clean_chinese(text)
         phonemes = ["sil"]
         chars = ['[PAD]']
