@@ -114,6 +114,13 @@ put 000001-010000.txt to ./data/000001-010000.txt
   zhe4 tu2 nan2 bu4 cheng2 shi4 P IY1 guo4 de5
 ```
 
+### 拼音错误修改
+将正确的词语和拼音写入文件： [./text/pinyin-local.txt](./text/pinyin-local.txt)
+```
+渐渐 jian4 jian4
+浅浅 qian3 qian3
+```
+
 ### Model compression based on knowledge distillation
 Student model has 53M size and 3× speed of teacher model.
 
