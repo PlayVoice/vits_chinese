@@ -3,6 +3,7 @@ import re
 from pypinyin import Style
 from pypinyin.contrib.neutral_tone import NeutralToneWith5Mixin
 from pypinyin.converter import DefaultConverter
+from pypinyin.core import load_phrases_dict
 from pypinyin.core import Pinyin
 
 from text import pinyin_dict
@@ -33,8 +34,24 @@ def clean_chinese(text: str):
     return text_clean
 
 
+def load_pinyin_dict():
+    my_dict={}
+    with open("./text/pinyin-local.txt", "r", encoding='utf-8') as f:
+        content = f.readlines()
+        for line in content:
+            cuts = line.strip().split()
+            hanzi = cuts[0]
+            phone = cuts[1:]
+            tmp = []
+            for p in phone:
+                tmp.append([p])
+            my_dict[hanzi] = tmp
+    load_phrases_dict(my_dict)
+
+
 class VITS_PinYin:
     def __init__(self, bert_path, device):
+        load_pinyin_dict()
         self.pinyin_parser = Pinyin(MyConverter())
         self.prosody = TTSProsody(bert_path, device)
 
