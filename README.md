@@ -19,9 +19,9 @@ Based on BERT, NaturalSpeech, VITS
 
 3, Framework of VITS，get high audio quality
 
-:heartpulse::heartpulse::heartpulse:Tip: It is recommended to use **Infer Loss** fine-tune model after base model trained, and freeze **PosteriorEncoder** during fine-tuning.
+:heartpulse:**Tip**: It is recommended to use **Infer Loss** fine-tune model after base model trained, and freeze **PosteriorEncoder** during fine-tuning.
 
-**意思就是：初步训练时，不用loss_kl_r；训练好后，添加loss_kl_r继续训练，稍微训练一下就行了，如果音频质量差，可以给loss_kl_r乘以一个小于1的系数、降低loss_kl_r对模型的贡献；继续训练时，可以尝试冻结音频编码器Posterior Encoder；总之，玩法很多，需要多尝试！**
+:heartpulse:**意思就是：初步训练时，不用loss_kl_r；训练好后，添加loss_kl_r继续训练，稍微训练一下就行了，如果音频质量差，可以给loss_kl_r乘以一个小于1的系数、降低loss_kl_r对模型的贡献；继续训练时，可以尝试冻结音频编码器Posterior Encoder；总之，玩法很多，需要多尝试！**
 
 ### Online demo
 https://huggingface.co/spaces/maxmax20160403/vits_chinese
@@ -36,15 +36,11 @@ https://huggingface.co/spaces/maxmax20160403/vits_chinese
 
 ### Infer with Pretrained model
 
-BaiduYun: https://pan.baidu.com/s/1Cj4MnwFyZ0XZmTR6EpygbQ?pwd=yn60
+Get from release page [vits_chinese/releases/](https://github.com/PlayVoice/vits_chinese/releases/tag/v1.0)
 
-Google: https://drive.google.com/drive/folders/1sioiNpebOLyCmHURgOgJ7ppWI7b-7Rb5?usp=sharing
+put [prosody_model.pt](https://github.com/PlayVoice/vits_chinese/releases/tag/v1.0) To ./bert/prosody_model.pt
 
-Or get from release page
-
-put prosody_model.pt To ./bert/prosody_model.pt
-
-put vits_bert_model.pth To ./vits_bert_model.pth
+put [vits_bert_model.pth](https://github.com/PlayVoice/vits_chinese/releases/tag/v1.0) To ./vits_bert_model.pth
 
 > python vits_infer.py --config ./configs/bert_vits.json --model vits_bert_model.pth
 
@@ -57,7 +53,7 @@ as key paramter, ***hop_frame = ∑decoder.ups.padding***
 > python vits_infer_stream.py --config ./configs/bert_vits.json --model vits_bert_model.pth
 
 ### Train
-download baker data: https://www.data-baker.com/data/index/TNtts/
+download baker data [https://aistudio.baidu.com/datasetdetail/36741](https://aistudio.baidu.com/datasetdetail/36741), more info: https://www.data-baker.com/data/index/TNtts/
 
 change sample rate of waves to **16kHz**, and put waves to ./data/waves
 
@@ -124,10 +120,6 @@ To infer, get studet model at release page or
 Google: :https://drive.google.com/file/d/1hTLWYEKH4GV9mQltrMyr3k2UKUo4chdp/view?usp=sharing
 
 > python vits_infer.py --config ./configs/bert_vits_student.json --model vits_bert_student.pth
-
-You can use vits_istft as a student model too.
-
-https://github.com/PlayVoice/vits_chinese/tree/vits_istft
 
 ### Video text
 > 天空呈现的透心的蓝，像极了当年。总在这样的时候，透过窗棂，心，在天空里无尽的游弋！柔柔的，浓浓的，痴痴的风，牵引起心底灵动的思潮；情愫悠悠，思情绵绵，风里默坐，红尘中的浅醉，诗词中的优柔，任那自在飞花轻似梦的情怀，裁一束霓衣，织就清浅淡薄的安寂。
