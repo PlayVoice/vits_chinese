@@ -149,3 +149,32 @@ https://github.com/Executedone/Chinese-FastSpeech2 **bert prosody**
 https://github.com/wenet-e2e/WeTextProcessing
 
 https://github.com/jaywalnut310/vits
+
+### 违反本项目开源协议的项目（截图日期：2023年10月16日）
+
+项目地址：https://github.com/fishaudio/Bert-VITS2
+
+开发人员：https://github.com/Stardust-minus & https://github.com/innnky
+
+#### 维权截图：
+![mit_license](https://github.com/PlayVoice/vits_chinese/assets/16432329/f0263711-d1b2-4175-8a19-af7c1116300b)
+
+#### bert_vits2的引用信息：
+![bert_vits2_info](https://github.com/PlayVoice/vits_chinese/assets/16432329/cd1adcc4-b955-4632-8aeb-b8c66a784b45)
+
+#### bert_vits2引用的MassTTS的实际代码：
+![masstts](https://github.com/PlayVoice/vits_chinese/assets/16432329/95765235-c599-4252-ad8e-a6bc723f9e2c)
+
+#### bert_vits2使用的实际代码：
+![bert_vits2_get_bert](https://github.com/PlayVoice/vits_chinese/assets/16432329/7fa6f5fd-1c69-4e26-8af8-b64af5916475)
+
+#### 本项目代码，出至Executedone/Chinese-FastSpeech2：
+![vits_chinese_get_bert](https://github.com/PlayVoice/vits_chinese/assets/16432329/d10440b2-4c84-4a30-b34c-8d8c56968505)
+
+#### Stardust-minus（两面三刀）向本人咨询问题的记录：
+![QQ_message](https://github.com/PlayVoice/vits_chinese/assets/16432329/fa8871c9-c03f-4412-8e65-4e43d8111881)
+
+#### PS. sovits官方项目地址为：https://github.com/sophiefy/Sovits
+
+#### 本人就是与svc-develop-team有积怨
+
