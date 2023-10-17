@@ -149,6 +149,12 @@ python vits_infer.py --config ./configs/bert_vits_student.json --model vits_bert
 > 
 > 时光仿佛有穿越到了从前，在你诗情画意的眼波中，在你舒适浪漫的暇思里，我如风中的思绪徜徉广阔天际，仿佛一片沾染了快乐的羽毛，在云环影绕颤动里浸润着风的呼吸，风的诗韵，那清新的耳语，那婉约的甜蜜，那恬淡的温馨，将一腔情澜染得愈发的缠绵。
 
+### 多发音人与克隆，基于AISHELL3的预训练模型
+
+需要到 https://huggingface.co/jackyqs/vits-aishell3-175-chinese/tree/main 下载模型
+
+详细见 https://github.com/csukuangfj/vits_chinese/tree/master/aishell3
+
 ### 代码来源
 [Microsoft's NaturalSpeech: End-to-End Text to Speech Synthesis with Human-Level Quality](https://arxiv.org/abs/2205.04421)
 
@@ -167,16 +173,13 @@ https://github.com/jaywalnut310/vits
 #### 维权截图：
 ![mit_license](https://github.com/PlayVoice/vits_chinese/assets/16432329/f0263711-d1b2-4175-8a19-af7c1116300b)
 
-#### bert_vits2的引用信息：
-![bert_vits2_info](https://github.com/PlayVoice/vits_chinese/assets/16432329/cd1adcc4-b955-4632-8aeb-b8c66a784b45)
-
-#### bert_vits2引用的MassTTS的实际代码：
+#### MassTTS处理bert的实际代码：
 ![masstts](https://github.com/PlayVoice/vits_chinese/assets/16432329/95765235-c599-4252-ad8e-a6bc723f9e2c)
 
-#### bert_vits2使用的实际代码：
+#### bert_vits2处理bert的实际代码：
 ![bert_vits2_get_bert](https://github.com/PlayVoice/vits_chinese/assets/16432329/7fa6f5fd-1c69-4e26-8af8-b64af5916475)
 
-#### 本项目代码，出至Executedone/Chinese-FastSpeech2：
+#### 本项目处理bert代码，出至Executedone/Chinese-FastSpeech2：
 ![vits_chinese_get_bert](https://github.com/PlayVoice/vits_chinese/assets/16432329/d10440b2-4c84-4a30-b34c-8d8c56968505)
 
 #### Stardust-minus（两面三刀）向本人咨询问题的记录：
