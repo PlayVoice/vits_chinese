@@ -199,5 +199,5 @@ https://github.com/csukuangfj **onnx and android**
 #### PS. 
 真正的sovits项目地址：https://github.com/sophiefy/Sovits
 
-首个中文TTS开源嵌入汉字BERT向量并根据发音长度拓展汉字BERT向量的项目：https://github.com/Executedone/Chinese-FastSpeech2
+首个开源，中文TTS嵌入根据发音长度拓展的汉字BERT向量：https://github.com/Executedone/Chinese-FastSpeech2
 
