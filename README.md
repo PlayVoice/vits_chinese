@@ -196,9 +196,6 @@ https://github.com/csukuangfj **onnx and android**
 #### 本项目处理bert代码，出至Executedone/Chinese-FastSpeech2：
 ![vits_chinese_get_bert](https://github.com/PlayVoice/vits_chinese/assets/16432329/d10440b2-4c84-4a30-b34c-8d8c56968505)
 
-#### Stardust-minus（两面三刀）向本人咨询问题的记录：
-![QQ_message](https://github.com/PlayVoice/vits_chinese/assets/16432329/fa8871c9-c03f-4412-8e65-4e43d8111881)
-
 #### PS. 
 真正的sovits项目地址：https://github.com/sophiefy/Sovits
 
