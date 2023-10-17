@@ -90,8 +90,9 @@ class TextEncoder(nn.Module):
 
     def forward(self, x, x_lengths, bert):
         x = self.emb(x) * math.sqrt(self.hidden_channels)  # [b, t, h]
-        b = self.emb_bert(bert)
-        x = x + b
+        if bert is not None:
+            b = self.emb_bert(bert)
+            x = x + b
         x = torch.transpose(x, 1, -1)  # [b, h, t]
         x_mask = torch.unsqueeze(commons.sequence_mask(x_lengths, x.size(2)), 1).to(
             x.dtype
@@ -832,7 +833,7 @@ class SynthesizerEval(nn.Module):
         self.dec.remove_weight_norm()
         self.flow.remove_weight_norm()
 
-    def infer(self, x, x_lengths, bert, sid=None, noise_scale=1, length_scale=1, max_len=None):
+    def infer(self, x, x_lengths, bert=None, sid=None, noise_scale=1, length_scale=1, max_len=None):
         x, m_p, logs_p, x_mask = self.enc_p(x, x_lengths, bert)
         if self.n_speakers > 0:
             g = self.emb_g(sid).unsqueeze(-1)  # [b, h, 1]
