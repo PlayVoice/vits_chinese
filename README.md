@@ -12,7 +12,7 @@ https://user-images.githubusercontent.com/16432329/220678182-4775dec8-9229-4578-
 
 Based on BERT, NaturalSpeech, VITS
 
-### Features
+### Features，特性
 1, Hidden prosody embedding from BERT，get natural pauses in grammar
 
 2, Infer loss from NaturalSpeech，get less sound error
@@ -23,10 +23,10 @@ Based on BERT, NaturalSpeech, VITS
 
 :heartpulse:**意思就是：初步训练时，不用loss_kl_r；训练好后，添加loss_kl_r继续训练，稍微训练一下就行了，如果音频质量差，可以给loss_kl_r乘以一个小于1的系数、降低loss_kl_r对模型的贡献；继续训练时，可以尝试冻结音频编码器Posterior Encoder；总之，玩法很多，需要多尝试！**
 
-### Online demo
+### Online demo，在线体验
 https://huggingface.co/spaces/maxmax20160403/vits_chinese
 
-### Install
+### Install，安装依赖和MAS对齐
 
 > pip install -r requirements.txt
 
@@ -34,7 +34,7 @@ https://huggingface.co/spaces/maxmax20160403/vits_chinese
 
 > python setup.py build_ext --inplace
 
-### Infer with Pretrained model
+### Infer with Pretrained model，用示例模型推理
 
 Get from release page [vits_chinese/releases/](https://github.com/PlayVoice/vits_chinese/releases/tag/v1.0)
 
@@ -48,7 +48,7 @@ python vits_infer.py --config ./configs/bert_vits.json --model vits_bert_model.p
 
 ./vits_infer_out have the waves infered, listen !!!
 
-### Infer with chunk wave streaming out
+### Infer with chunk wave streaming out，分块流式推理
 
 as key paramter, ***hop_frame = ∑decoder.ups.padding*** :heartpulse:
 
@@ -56,7 +56,7 @@ as key paramter, ***hop_frame = ∑decoder.ups.padding*** :heartpulse:
 python vits_infer_stream.py --config ./configs/bert_vits.json --model vits_bert_model.pth
 ```
 
-### Train
+### Train，训练
 download baker data [https://aistudio.baidu.com/datasetdetail/36741](https://aistudio.baidu.com/datasetdetail/36741), more info: https://www.data-baker.com/data/index/TNtts/
 
 change sample rate of waves to **16kHz**, and put waves to ./data/waves
@@ -119,7 +119,15 @@ python train.py -c configs/bert_vits.json -m bert_vits
 ### 数字播报支持
 已支持，基于WeNet开源社区[WeTextProcessing](https://github.com/wenet-e2e/WeTextProcessing)；当然，不可能是完美的
 
-### Model compression based on knowledge distillation
+### 不使用Bert也能推理
+```
+python vits_infer_no_bert.py --config ./configs/bert_vits.json --model vits_bert_model.pth
+```
+虽然训练使用了Bert，但推理可以完全不用Bert，牺牲自然停顿来适配低计算资源设备，比如手机
+
+低资源设备通常会分句合成，这样牺牲的自然停顿也没那么明显
+
+### Model compression based on knowledge distillation，应该叫迁移学习还是知识蒸馏呢？
 Student model has 53M size and 3× speed of teacher model.
 
 To train:
@@ -134,14 +142,14 @@ To infer, get [studet model](https://github.com/PlayVoice/vits_chinese/releases/
 python vits_infer.py --config ./configs/bert_vits_student.json --model vits_bert_student.pth
 ```
 
-### Video text
+### 演示视频的文本
 > 天空呈现的透心的蓝，像极了当年。总在这样的时候，透过窗棂，心，在天空里无尽的游弋！柔柔的，浓浓的，痴痴的风，牵引起心底灵动的思潮；情愫悠悠，思情绵绵，风里默坐，红尘中的浅醉，诗词中的优柔，任那自在飞花轻似梦的情怀，裁一束霓衣，织就清浅淡薄的安寂。
 > 
 > 风的影子翻阅过淡蓝色的信笺，柔和的文字浅浅地漫过我安静的眸，一如几朵悠闲的云儿，忽而氤氲成汽，忽而修饰成花，铅华洗尽后的透彻和靓丽，爽爽朗朗，轻轻盈盈
 > 
 > 时光仿佛有穿越到了从前，在你诗情画意的眼波中，在你舒适浪漫的暇思里，我如风中的思绪徜徉广阔天际，仿佛一片沾染了快乐的羽毛，在云环影绕颤动里浸润着风的呼吸，风的诗韵，那清新的耳语，那婉约的甜蜜，那恬淡的温馨，将一腔情澜染得愈发的缠绵。
 
-### Reference For TTS
+### 代码来源
 [Microsoft's NaturalSpeech: End-to-End Text to Speech Synthesis with Human-Level Quality](https://arxiv.org/abs/2205.04421)
 
 https://github.com/Executedone/Chinese-FastSpeech2 **bert prosody**
@@ -174,7 +182,8 @@ https://github.com/jaywalnut310/vits
 #### Stardust-minus（两面三刀）向本人咨询问题的记录：
 ![QQ_message](https://github.com/PlayVoice/vits_chinese/assets/16432329/fa8871c9-c03f-4412-8e65-4e43d8111881)
 
-#### PS. sovits官方项目地址为：https://github.com/sophiefy/Sovits
+#### PS. 
+真正的sovits项目地址：https://github.com/sophiefy/Sovits
 
-#### 本人就是与svc-develop-team有积怨
+本人确实与svc-develop-team有积怨
 
