@@ -164,6 +164,10 @@ https://github.com/wenet-e2e/WeTextProcessing
 
 https://github.com/jaywalnut310/vits
 
+https://github.com/wenet-e2e/wetts **chinese mix english**
+
+https://github.com/csukuangfj **onnx and android**
+
 ### 违反本项目开源协议的项目（截图日期：2023年10月16日）
 
 项目地址：https://github.com/fishaudio/Bert-VITS2
