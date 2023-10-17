@@ -127,6 +127,16 @@ python vits_infer_no_bert.py --config ./configs/bert_vits.json --model vits_bert
 
 低资源设备通常会分句合成，这样牺牲的自然停顿也没那么明显
 
+### ONNX导出与推理
+导出：会有许多警告，直接忽略
+```
+python model_onnx.py --config configs/bert_vits.json --model vits_bert_model.pth
+```
+推理
+```
+python vits_infer_onnx.py --model vits-chinese.onnx
+```
+
 ### Model compression based on knowledge distillation，应该叫迁移学习还是知识蒸馏呢？
 Student model has 53M size and 3× speed of teacher model.
 
@@ -192,5 +202,5 @@ https://github.com/csukuangfj **onnx and android**
 #### PS. 
 真正的sovits项目地址：https://github.com/sophiefy/Sovits
 
-本人确实与svc-develop-team有积怨
+中文TTS首个开源嵌入BERT向量项目：https://github.com/Executedone/Chinese-FastSpeech2
 
