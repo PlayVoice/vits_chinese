@@ -165,7 +165,7 @@ python vits_infer.py --config ./configs/bert_vits_student.json --model vits_bert
 
 详细见 https://github.com/csukuangfj/vits_chinese/tree/master/aishell3
 
-可适用 https://huggingface.co/spaces/k2-fsa/text-to-speech
+可试用 https://huggingface.co/spaces/k2-fsa/text-to-speech
 
 ### 代码来源
 [Microsoft's NaturalSpeech: End-to-End Text to Speech Synthesis with Human-Level Quality](https://arxiv.org/abs/2205.04421)
