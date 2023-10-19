@@ -176,30 +176,6 @@ https://github.com/wenet-e2e/WeTextProcessing
 
 https://github.com/jaywalnut310/vits
 
-https://github.com/wenet-e2e/wetts **chinese mix english**
+https://github.com/wenet-e2e/wetts
 
-https://github.com/csukuangfj **onnx and android**
-
-### 违反本项目开源协议的项目（截图日期：2023年10月16日）
-
-项目地址：https://github.com/fishaudio/Bert-VITS2
-
-开发人员：https://github.com/Stardust-minus & https://github.com/innnky
-
-#### 维权截图：
-![mit_license](https://github.com/PlayVoice/vits_chinese/assets/16432329/f0263711-d1b2-4175-8a19-af7c1116300b)
-
-#### MassTTS处理bert的实际代码：
-![masstts](https://github.com/PlayVoice/vits_chinese/assets/16432329/95765235-c599-4252-ad8e-a6bc723f9e2c)
-
-#### bert_vits2处理bert的实际代码：
-![bert_vits2_get_bert](https://github.com/PlayVoice/vits_chinese/assets/16432329/7fa6f5fd-1c69-4e26-8af8-b64af5916475)
-
-#### 本项目处理bert代码，出至Executedone/Chinese-FastSpeech2：
-![vits_chinese_get_bert](https://github.com/PlayVoice/vits_chinese/assets/16432329/d10440b2-4c84-4a30-b34c-8d8c56968505)
-
-#### PS. 
-真正的sovits项目地址：https://github.com/sophiefy/Sovits
-
-首个开源，中文TTS嵌入根据发音长度拓展的汉字BERT向量：https://github.com/Executedone/Chinese-FastSpeech2
-
+https://github.com/csukuangfj **onnx and clone**
