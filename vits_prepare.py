@@ -98,6 +98,8 @@ if __name__ == "__main__":
                         a = pinyin[:-1]
                         a1, a2 = pinyin_dict[a]
                         phone_items += [a1, a2 + tone]
+                    else:
+                        raise IndexError(f'Unkown PinYin: {pinyin}')
                 else:
                     count_phone.append(1)
                     phone_items.append('sp')
