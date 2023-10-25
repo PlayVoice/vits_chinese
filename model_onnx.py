@@ -264,9 +264,8 @@ def main():
         ],
         output_names=["y"],
         dynamic_axes={
-            "x": {0: "N", 1: "L"},  # n_audio is also known as batch_size
-            "x_length": {0: "N"},
-            "y": {0: "N", 2: "L"},
+            "x": {1: "L"},
+            "y": {0: "L"},
         },
     )
     meta_data = {
