@@ -43,10 +43,7 @@ class OnnxModel:
         self.sample_rate = int(meta["sample_rate"])
         print(meta)
 
-    def __call__(
-        self,
-        x: torch.Tensor,
-    ) -> torch.Tensor:
+    def __call__(self, x: torch.Tensor):
         """
         Args:
           x:
