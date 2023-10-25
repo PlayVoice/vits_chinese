@@ -137,6 +137,16 @@ python model_onnx.py --config configs/bert_vits.json --model vits_bert_model.pth
 python vits_infer_onnx.py --model vits-chinese.onnx
 ```
 
+### ONNX流式模型导出
+```
+python model_onnx_stream.py --config configs/bert_vits.json --model vits_bert_model.pth
+```
+
+### ONNX流式模型推理
+```
+python vits_infer_onnx_stream.py --encoder vits-chinese-encoder.onnx --decoder vits-chinese-decoder.onnx
+```
+
 ### Model compression based on knowledge distillation，应该叫迁移学习还是知识蒸馏呢？
 Student model has 53M size and 3× speed of teacher model.
 
