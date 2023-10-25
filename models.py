@@ -921,11 +921,12 @@ class SynthesizerEval(nn.Module):
         )  # [b, t', t], [b, t, d] -> [b, d, t']
 
         z_p = m_p + torch.randn_like(m_p) * torch.exp(logs_p) * noise_scale
-        z = self.flow(z_p, y_mask, g=g, reverse=True)
-        len_z = z.size()[2]
+
+        len_z = z_p.size()[2]
         print('frame size is: ', len_z)
         if (len_z < 100):
             print('no nead steam')
+            z = self.flow(z_p, y_mask, g=g, reverse=True)
             one_time_wav = self.dec(z, g=g)[0, 0].data.cpu().float().numpy()
             return one_time_wav
 
@@ -952,7 +953,9 @@ class SynthesizerEval(nn.Module):
                 cut_e = stream_index + stream_chunk + hop_frame
                 cut_e_wav = -1 * hop_sample
             
-            z_chunk = z[:, :, cut_s:cut_e]
+            z_chunk = z_p[:, :, cut_s:cut_e]
+            m_chunk = y_mask[:, :, cut_s:cut_e]
+            z_chunk = self.flow(z_chunk, m_chunk, g=g, reverse=True)
             o_chunk = self.dec(z_chunk, g=g)[0, 0].data.cpu().float().numpy()
             o_chunk = o_chunk[cut_s_wav:cut_e_wav]
             stream_out_wav.extend(o_chunk)
@@ -962,7 +965,9 @@ class SynthesizerEval(nn.Module):
         if (stream_index < len_z):
             cut_s = stream_index - hop_frame
             cut_s_wav = hop_sample
-            z_chunk = z[:, :, cut_s:]
+            z_chunk = z_p[:, :, cut_s:]
+            m_chunk = y_mask[:, :, cut_s:]
+            z_chunk = self.flow(z_chunk, m_chunk, g=g, reverse=True)
             o_chunk = self.dec(z_chunk, g=g)[0, 0].data.cpu().float().numpy()
             o_chunk = o_chunk[cut_s_wav:]
             stream_out_wav.extend(o_chunk)
