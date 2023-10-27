@@ -103,6 +103,7 @@ def run(rank, n_gpus, hps):
         len(symbols),
         hps.data.filter_length // 2 + 1,
         hps.train.segment_size // hps.data.hop_length,
+        n_speakers=hps.data.n_speakers,
         **hps.model,
     ).cuda(rank)
     net_d = MultiPeriodDiscriminator(hps.model.use_spectral_norm).cuda(rank)
@@ -119,19 +120,10 @@ def run(rank, n_gpus, hps):
         eps=hps.train.eps,
     )
 
-    try:
-        teacher = getattr(hps.train, "teacher")
-        if rank == 0:
-            logger.info(f"Has teacher model: {teacher}")
+    # net_g.lock_post_encoder()
+    # utils.load_model("AISHELL3_G.pth", net_g)
 
-        net_g = DDP(net_g, device_ids=[rank], find_unused_parameters=True)
-        utils.load_teacher(teacher, net_g)
-    except:
-
-        net_g = DDP(net_g, device_ids=[rank])
-        if rank == 0:
-            logger.info("no teacher model.")
-
+    net_g = DDP(net_g, device_ids=[rank])
     net_d = DDP(net_d, device_ids=[rank])
 
     try:
@@ -205,7 +197,7 @@ def train_and_evaluate(
         loader = tqdm.tqdm(train_loader, desc='Loading train data')
     else:
         loader = train_loader
-    for batch_idx, (x, x_lengths, bert, spec, spec_lengths, y, y_lengths) in enumerate(loader):
+    for batch_idx, (x, x_lengths, bert, spec, spec_lengths, y, y_lengths, sid) in enumerate(loader):
         x, x_lengths = x.cuda(rank, non_blocking=True), x_lengths.cuda(
             rank, non_blocking=True
         )
@@ -216,10 +208,11 @@ def train_and_evaluate(
             rank, non_blocking=True
         )
         bert = bert.cuda(rank, non_blocking=True)
+        sid = sid.cuda(rank, non_blocking=True)
 
         with autocast(enabled=hps.train.fp16_run):
             y_hat, l_length, attn, ids_slice, x_mask, z_mask, \
-            (z, z_p, z_r, m_p, logs_p, m_q, logs_q) = net_g(x, x_lengths, bert, spec, spec_lengths)
+            (z, z_p, z_r, m_p, logs_p, m_q, logs_q) = net_g(x, x_lengths, bert, spec, spec_lengths, sid)
 
             mel = spec_to_mel_torch(
                 spec,
@@ -267,13 +260,10 @@ def train_and_evaluate(
                 loss_dur = torch.sum(l_length.float())
                 loss_mel = F.l1_loss(y_mel, y_hat_mel) * hps.train.c_mel
                 loss_kl = kl_loss(z_p, logs_q, m_p, logs_p, z_mask) * hps.train.c_kl
-                if z_r == None:
-                    loss_kl_r = 0
-                else:
-                    loss_kl_r = kl_loss(z_r, logs_p, m_q, logs_q, z_mask) * hps.train.c_kl
+                loss_kl_r = kl_loss(z_r, logs_p, m_q, logs_q, z_mask) * hps.train.c_kl
                 loss_fm = feature_loss(fmap_r, fmap_g)
                 loss_gen, losses_gen = generator_loss(y_d_hat_g)
-                loss_gen_all = loss_gen + loss_fm + loss_mel + loss_dur + loss_kl + loss_kl_r
+                loss_gen_all = loss_gen + loss_fm + loss_mel + loss_dur + loss_kl + loss_kl_r * 0.05
         optim_g.zero_grad()
         scaler.scale(loss_gen_all).backward()
         scaler.unscale_(optim_g)
@@ -381,11 +371,12 @@ def train_and_evaluate(
 def evaluate(hps, generator, eval_loader, writer_eval):
     generator.eval()
     with torch.no_grad():
-        for batch_idx, (x, x_lengths, bert, spec, spec_lengths, y, y_lengths) in enumerate(eval_loader):
+        for batch_idx, (x, x_lengths, bert, spec, spec_lengths, y, y_lengths, sid) in enumerate(eval_loader):
             x, x_lengths = x.cuda(0), x_lengths.cuda(0)
             spec, spec_lengths = spec.cuda(0), spec_lengths.cuda(0)
             y, y_lengths = y.cuda(0), y_lengths.cuda(0)
             bert = bert.cuda(0)
+            sid = sid.cuda(0)
 
             # remove else
             x = x[:1]
@@ -394,8 +385,9 @@ def evaluate(hps, generator, eval_loader, writer_eval):
             spec_lengths = spec_lengths[:1]
             y = y[:1]
             y_lengths = y_lengths[:1]
+            sid = sid[:1]
             break
-        y_hat, attn, mask, *_ = generator.module.infer(x, x_lengths, bert, max_len=1000)
+        y_hat, attn, mask, *_ = generator.module.infer(x, x_lengths, bert, sid, max_len=1000)
         y_hat_lengths = mask.sum([1, 2]).long() * hps.data.hop_length
 
         mel = spec_to_mel_torch(

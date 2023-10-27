@@ -1,7 +1,7 @@
 {
   "train": {
     "train_class": "models.SynthesizerTrn",
-    "eval_class": "models.SynthesizerEval",
+    "eval_class": "models.SynthesizerTrn",
     "log_interval": 100,
     "eval_interval": 10000,
     "seed": 1234,
@@ -30,7 +30,7 @@
     "mel_fmin": 0.0,
     "mel_fmax": null,
     "add_blank": false,
-    "n_speakers": 0
+    "n_speakers": 174
   },
   "model": {
     "inter_channels": 192,
@@ -47,6 +47,7 @@
     "upsample_initial_channel": 512,
     "upsample_kernel_sizes": [16,16,4,4],
     "n_layers_q": 3,
-    "use_spectral_norm": false
+    "use_spectral_norm": false,
+    "gin_channels": 256
   }
 }
