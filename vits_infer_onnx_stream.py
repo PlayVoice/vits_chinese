@@ -188,7 +188,7 @@ def main():
         print('hop_length is: ', decoder.hop_length)
         # can not change these parameters
         hop_length = decoder.hop_length
-        hop_frame = 9
+        hop_frame = 12
         hop_sample = hop_frame * hop_length
         stream_chunk = 50
         stream_index = 0
