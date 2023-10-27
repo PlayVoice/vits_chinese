@@ -9,15 +9,18 @@
 ## 这是一个用于TTS算法学习的项目，如果您在寻找直接用于生产的TTS，本项目可能不适合您！
 https://user-images.githubusercontent.com/16432329/220678182-4775dec8-9229-4578-870f-2eebc3a5d660.mp4
 
-
-Based on BERT, NaturalSpeech, VITS
+> 天空呈现的透心的蓝，像极了当年。总在这样的时候，透过窗棂，心，在天空里无尽的游弋！柔柔的，浓浓的，痴痴的风，牵引起心底灵动的思潮；情愫悠悠，思情绵绵，风里默坐，红尘中的浅醉，诗词中的优柔，任那自在飞花轻似梦的情怀，裁一束霓衣，织就清浅淡薄的安寂。
+> 
+> 风的影子翻阅过淡蓝色的信笺，柔和的文字浅浅地漫过我安静的眸，一如几朵悠闲的云儿，忽而氤氲成汽，忽而修饰成花，铅华洗尽后的透彻和靓丽，爽爽朗朗，轻轻盈盈
+> 
+> 时光仿佛有穿越到了从前，在你诗情画意的眼波中，在你舒适浪漫的暇思里，我如风中的思绪徜徉广阔天际，仿佛一片沾染了快乐的羽毛，在云环影绕颤动里浸润着风的呼吸，风的诗韵，那清新的耳语，那婉约的甜蜜，那恬淡的温馨，将一腔情澜染得愈发的缠绵。
 
 ### Features，特性
-1, Hidden prosody embedding from BERT，get natural pauses in grammar
+1, Hidden prosody embedding from **BERT**，get natural pauses in grammar
 
-2, Infer loss from NaturalSpeech，get less sound error
+2, Infer loss from **NaturalSpeech**，get less sound error
 
-3, Framework of VITS，get high audio quality
+3, Framework of **VITS**，get high audio quality
 
 :heartpulse:**Tip**: It is recommended to use **Infer Loss** fine-tune model after base model trained, and freeze **PosteriorEncoder** during fine-tuning.
 
@@ -87,7 +90,9 @@ python train.py -c configs/bert_vits.json -m bert_vits
   jia2 yu3 cun1 yan2 bie2 zai4 yong1 bao4 wo3
 ```
 
-需要标注为，BERT需要汉字 `卡尔普陪外孙玩滑梯。` (包括标点)，TTS需要声韵母 `sil k a2 ^ er2 p u3 p ei2 ^ uai4 s uen1 ^ uan2 h ua2 t i1 sp sil`
+标注规整后：
+- BERT需要汉字 `卡尔普陪外孙玩滑梯。` (包括标点)
+- TTS需要声韵母 `sil k a2 ^ er2 p u3 p ei2 ^ uai4 s uen1 ^ uan2 h ua2 t i1 sp sil`
 ``` c
 000001	卡尔普陪外孙玩滑梯。
   ka2 er2 pu3 pei2 wai4 sun1 wan2 hua2 ti1
@@ -127,7 +132,7 @@ python vits_infer_no_bert.py --config ./configs/bert_vits.json --model vits_bert
 
 低资源设备通常会分句合成，这样牺牲的自然停顿也没那么明显
 
-### ONNX导出与推理
+### ONNX非流式
 导出：会有许多警告，直接忽略
 ```
 python model_onnx.py --config configs/bert_vits.json --model vits_bert_model.pth
@@ -137,15 +142,30 @@ python model_onnx.py --config configs/bert_vits.json --model vits_bert_model.pth
 python vits_infer_onnx.py --model vits-chinese.onnx
 ```
 
-### ONNX流式模型导出
+### ONNX流式
+
+具体实现，将VITS拆解为两个模型，取名为Encoder和Decoder。
+
+- Encoder包括TextEncoder与DurationPredictor等；
+
+- Decoder包括ResidualCouplingBlock与Generator等；
+
+并且将推理逻辑也进行了切分；特别的，先验分布的采样过程放在了Encoder中：
+```
+z_p = m_p + torch.randn_like(m_p) * torch.exp(logs_p) * noise_scale
+```
+
+ONNX流式模型导出
 ```
 python model_onnx_stream.py --config configs/bert_vits.json --model vits_bert_model.pth
 ```
 
-### ONNX流式模型推理
+ONNX流式模型推理
 ```
 python vits_infer_onnx_stream.py --encoder vits-chinese-encoder.onnx --decoder vits-chinese-decoder.onnx
 ```
+
+在流式推理中，**hop_frame**是一个重要参数，需要去尝试出合适的值
 
 ### Model compression based on knowledge distillation，应该叫迁移学习还是知识蒸馏呢？
 Student model has 53M size and 3× speed of teacher model.
@@ -161,13 +181,6 @@ To infer, get [studet model](https://github.com/PlayVoice/vits_chinese/releases/
 ```
 python vits_infer.py --config ./configs/bert_vits_student.json --model vits_bert_student.pth
 ```
-
-### 演示视频的文本
-> 天空呈现的透心的蓝，像极了当年。总在这样的时候，透过窗棂，心，在天空里无尽的游弋！柔柔的，浓浓的，痴痴的风，牵引起心底灵动的思潮；情愫悠悠，思情绵绵，风里默坐，红尘中的浅醉，诗词中的优柔，任那自在飞花轻似梦的情怀，裁一束霓衣，织就清浅淡薄的安寂。
-> 
-> 风的影子翻阅过淡蓝色的信笺，柔和的文字浅浅地漫过我安静的眸，一如几朵悠闲的云儿，忽而氤氲成汽，忽而修饰成花，铅华洗尽后的透彻和靓丽，爽爽朗朗，轻轻盈盈
-> 
-> 时光仿佛有穿越到了从前，在你诗情画意的眼波中，在你舒适浪漫的暇思里，我如风中的思绪徜徉广阔天际，仿佛一片沾染了快乐的羽毛，在云环影绕颤动里浸润着风的呼吸，风的诗韵，那清新的耳语，那婉约的甜蜜，那恬淡的温馨，将一腔情澜染得愈发的缠绵。
 
 ### 多发音人与克隆，基于AISHELL3的预训练模型
 
@@ -188,4 +201,4 @@ https://github.com/jaywalnut310/vits
 
 https://github.com/wenet-e2e/wetts
 
-https://github.com/csukuangfj **onnx and clone**
+https://github.com/csukuangfj **onnx and android**
