@@ -205,7 +205,7 @@ https://github.com/csukuangfj **onnx and android**
 
 
 # AISHELL3多发音人训练，训练出的模型可用于克隆
-切换代码分支[bert_vits_aishell3](https://github.com/PlayVoice/vits_chinese/tree/bert_vits_aishell3)
+切换代码分支[bert_vits_aishell3](https://github.com/PlayVoice/vits_chinese/tree/bert_vits_aishell3)，对比分支代码可以看到**针对多发音人所做出的修改**
 
 ## 数据下载
 http://www.openslr.org/93/
