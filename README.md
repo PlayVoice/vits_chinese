@@ -176,7 +176,7 @@ To train:
 python train.py -c configs/bert_vits_student.json -m bert_vits_student
 ```
 
-To infer, get [studet model](https://github.com/PlayVoice/vits_chinese/releases/tag/v2.0) at release page
+To infer, get [student model](https://github.com/PlayVoice/vits_chinese/releases/tag/v2.0) at release page
 
 ```
 python vits_infer.py --config ./configs/bert_vits_student.json --model vits_bert_student.pth
