@@ -49,7 +49,7 @@ put [vits_bert_model.pth](https://github.com/PlayVoice/vits_chinese/releases/tag
 python vits_infer.py --config ./configs/bert_vits.json --model vits_bert_model.pth
 ```
 
-./vits_infer_out have the waves infered, listen !!!
+./vits_infer_out have the waves inferred, listen !!!
 
 ### Infer with chunk wave streaming out，分块流式推理
 
