@@ -182,14 +182,6 @@ To infer, get [student model](https://github.com/PlayVoice/vits_chinese/releases
 python vits_infer.py --config ./configs/bert_vits_student.json --model vits_bert_student.pth
 ```
 
-### 多发音人与克隆，基于AISHELL3的预训练模型
-
-需要到 https://huggingface.co/jackyqs/vits-aishell3-175-chinese/tree/main 下载模型
-
-详细见 https://github.com/csukuangfj/vits_chinese/tree/master/aishell3
-
-可试用 https://huggingface.co/spaces/k2-fsa/text-to-speech
-
 ### 代码来源
 [Microsoft's NaturalSpeech: End-to-End Text to Speech Synthesis with Human-Level Quality](https://arxiv.org/abs/2205.04421)
 
@@ -277,3 +269,9 @@ AISHELL3_G.pth：https://github.com/PlayVoice/vits_chinese/releases/v4.0
 python vits_infer.py -c configs/bert_vits.json -m AISHELL3_G.pth -i 0
 ```
 -i 为发音人序号，取值范围：0 ~ 173
+
+## 训练的AISHELL3模型，使用小米K2社区开源的AISHELL3模型来初始化训练权重，以节约训练时间
+
+K2开源模型 https://huggingface.co/jackyqs/vits-aishell3-175-chinese/tree/main 下载模型
+
+K2在线试用 https://huggingface.co/spaces/k2-fsa/text-to-speech
