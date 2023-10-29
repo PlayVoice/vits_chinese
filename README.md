@@ -2,10 +2,14 @@
 http://www.openslr.org/93/
 
 ## 采样率转换
+```
 python prep_resample.py --wav aishell-3/train/wav/ --out vits_data/waves-16k
+```
 
 ## 标注规范化（lables.txt，名称不能改）
+```
 python prep_format_label.py --txt aishell-3/train/content.txt --out vits_data/lables.txt
+```
 
 - 原始标注
 ```
@@ -23,7 +27,9 @@ SSB00050003.wav 七路无人售票
 	qi1 lu4 wu2 ren2 shou4 piao4
 ```
 ## 数据预处理
+```
 python prep_bert.py --conf configs/bert_vits.json --data vits_data/
+```
 
 打印信息，在过滤本项目不支持的**儿化音**
 
@@ -38,7 +44,9 @@ python prep_bert.py --conf configs/bert_vits.json --data vits_data/
 0|vits_data/waves-16k/SSB0005/SSB00050004.wav|vits_data/temps/SSB0005/SSB00050004.spec.pt|vits_data/berts/SSB0005/SSB00050004.npy|sil h ei1 k e4 x van1 b u4 zh iii3 ^ iao4 b o1 d a2 m ou3 ^ i2 g e4 d ian4 h ua4 sil
 ```
 ## 数据调试
+```
 python prep_debug.py
+```
 
 ## 启动训练
 
@@ -57,6 +65,11 @@ AISHELL3_G.pth：https://github.com/PlayVoice/vits_chinese/releases/v4.0
 
 ## 推理测试
 ```
-python vits_infer.py -c configs/bert_vits.json -m AISHELL3_G.pth -i 0
+python vits_infer.py -c configs/bert_vits.json -m AISHELL3_G.pth -i 6
 ```
 -i 为发音人序号，取值范围：0 ~ 173
+
+## 训练的AISHELL3模型，使用小米K2社区开源的AISHELL3模型来初始化训练权重，以节约训练时间
+K2开源模型 https://huggingface.co/jackyqs/vits-aishell3-175-chinese/tree/main 下载模型
+
+K2在线试用 https://huggingface.co/spaces/k2-fsa/text-to-speech
