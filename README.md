@@ -207,9 +207,9 @@ http://www.openslr.org/93/
 python prep_resample.py --wav aishell-3/train/wav/ --out vits_data/waves-16k
 ```
 
-## 标注规范化（lables.txt，名称不能改）
+## 标注规范化（labels.txt，名称不能改）
 ```
-python prep_format_label.py --txt aishell-3/train/content.txt --out vits_data/lables.txt
+python prep_format_label.py --txt aishell-3/train/content.txt --out vits_data/labels.txt
 ```
 
 - 原始标注
