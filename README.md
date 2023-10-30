@@ -58,6 +58,10 @@ as key paramter, ***hop_frame = ∑decoder.ups.padding*** :heartpulse:
 ```
 python vits_infer_stream.py --config ./configs/bert_vits.json --model vits_bert_model.pth
 ```
+### All Thanks To Our Contributors:
+<a href="https://github.com/MaxMax2016/vits_chinese/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=MaxMax2016/vits_chinese" />
+</a>
 
 ### Train，训练
 download baker data [https://aistudio.baidu.com/datasetdetail/36741](https://aistudio.baidu.com/datasetdetail/36741), more info: https://www.data-baker.com/data/index/TNtts/
