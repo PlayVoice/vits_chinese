@@ -270,6 +270,8 @@ python vits_infer.py -c configs/bert_vits.json -m AISHELL3_G.pth -i 0
 ```
 -i 为发音人序号，取值范围：0 ~ 173
 
+**AISHELL3训练数据都是短短的一句话，所以，推理语句中不能有标点**
+
 ## 训练的AISHELL3模型，使用小米K2社区开源的AISHELL3模型来初始化训练权重，以节约训练时间
 
 K2开源模型 https://huggingface.co/jackyqs/vits-aishell3-175-chinese/tree/main 下载模型
