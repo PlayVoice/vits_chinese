@@ -53,7 +53,7 @@ python vits_infer.py --config ./configs/bert_vits.json --model vits_bert_model.p
 
 ### Infer with chunk wave streaming out，分块流式推理
 
-as key paramter, ***hop_frame = ∑decoder.ups.padding*** :heartpulse:
+as key parameter, ***hop_frame = ∑decoder.ups.padding*** :heartpulse:
 
 ```
 python vits_infer_stream.py --config ./configs/bert_vits.json --model vits_bert_model.pth
