@@ -154,6 +154,8 @@ python vits_infer_onnx.py --model vits-chinese.onnx
 
 - Decoder包括ResidualCouplingBlock与Generator等；
 
+- ResidualCouplingBlock，即Flow，可以放在Encoder或Decoder，放在Decoder需要更大的**hop_frame**
+
 并且将推理逻辑也进行了切分；特别的，先验分布的采样过程放在了Encoder中：
 ```
 z_p = m_p + torch.randn_like(m_p) * torch.exp(logs_p) * noise_scale
