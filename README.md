@@ -195,6 +195,8 @@ https://github.com/Executedone/Chinese-FastSpeech2 **bert prosody**
 
 https://github.com/wenet-e2e/WeTextProcessing
 
+[https://github.com/TensorSpeech/TensorFlowTTS](https://github.com/TensorSpeech/TensorFlowTTS/blob/master/tensorflow_tts/processor/baker.py) **Heavily depend on**
+
 https://github.com/jaywalnut310/vits
 
 https://github.com/wenet-e2e/wetts
