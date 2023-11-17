@@ -26,6 +26,12 @@ https://user-images.githubusercontent.com/16432329/220678182-4775dec8-9229-4578-
 
 :heartpulse:**意思就是：初步训练时，不用loss_kl_r；训练好后，添加loss_kl_r继续训练，稍微训练一下就行了，如果音频质量差，可以给loss_kl_r乘以一个小于1的系数、降低loss_kl_r对模型的贡献；继续训练时，可以尝试冻结音频编码器Posterior Encoder；总之，玩法很多，需要多尝试！**
 
+<div align="center">
+	
+![naturalspeech](https://github.com/PlayVoice/vits_chinese/assets/16432329/0d7ceb00-f159-40a4-8897-b3f2a3c824d3)
+
+</div>
+
 ### Online demo，在线体验
 https://huggingface.co/spaces/maxmax20160403/vits_chinese
 
