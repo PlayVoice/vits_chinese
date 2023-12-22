@@ -64,6 +64,10 @@ as key parameter, ***hop_frame = ∑decoder.ups.padding*** :heartpulse:
 ```
 python vits_infer_stream.py --config ./configs/bert_vits.json --model vits_bert_model.pth
 ```
+
+### Ceil duration affect naturalness
+So change **w_ceil = torch.ceil(w)** to **w_ceil = torch.ceil(w + 0.35)**
+
 ### All Thanks To Our Contributors:
 <a href="https://github.com/MaxMax2016/vits_chinese/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=MaxMax2016/vits_chinese" />
