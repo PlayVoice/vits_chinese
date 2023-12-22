@@ -729,7 +729,7 @@ class SyntStudentTrn(nn.Module):
 
         logw = self.dp(x, x_mask, g=g)
         w = torch.exp(logw) * x_mask * length_scale
-        w_ceil = torch.ceil(w)
+        w_ceil = torch.ceil(w + 0.5)
         y_lengths = torch.clamp_min(torch.sum(w_ceil, [1, 2]), 1).long()
         y_mask = torch.unsqueeze(commons.sequence_mask(y_lengths, None), 1).to(
             x_mask.dtype
@@ -842,7 +842,7 @@ class SynthesizerEval(nn.Module):
 
         logw = self.dp(x, x_mask, g=g)
         w = torch.exp(logw) * x_mask * length_scale
-        w_ceil = torch.ceil(w)
+        w_ceil = torch.ceil(w + 0.35)
         y_lengths = torch.clamp_min(torch.sum(w_ceil, [1, 2]), 1).long()
         y_mask = torch.unsqueeze(commons.sequence_mask(y_lengths, None), 1).to(
             x_mask.dtype
@@ -871,7 +871,7 @@ class SynthesizerEval(nn.Module):
 
         logw = self.dp(x, x_mask, g=g)
         w = torch.exp(logw) * x_mask * length_scale
-        w_ceil = torch.ceil(w)
+        w_ceil = torch.ceil(w + 0.35)
         w_ceil = w_ceil * pause_mask + pause_value
         y_lengths = torch.clamp_min(torch.sum(w_ceil, [1, 2]), 1).long()
         y_mask = torch.unsqueeze(commons.sequence_mask(y_lengths, None), 1).to(
@@ -905,7 +905,7 @@ class SynthesizerEval(nn.Module):
 
         logw = self.dp(x, x_mask, g=g)
         w = torch.exp(logw) * x_mask * length_scale
-        w_ceil = torch.ceil(w)
+        w_ceil = torch.ceil(w + 0.35)
         y_lengths = torch.clamp_min(torch.sum(w_ceil, [1, 2]), 1).long()
         y_mask = torch.unsqueeze(commons.sequence_mask(y_lengths, None), 1).to(
             x_mask.dtype
