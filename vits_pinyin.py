@@ -2,18 +2,11 @@ import re
 
 from tn.chinese.normalizer import Normalizer
 
-from pypinyin import Style
-from pypinyin.contrib.neutral_tone import NeutralToneWith5Mixin
-from pypinyin.converter import DefaultConverter
+from pypinyin import lazy_pinyin, Style
 from pypinyin.core import load_phrases_dict
-from pypinyin.core import Pinyin
 
 from text import pinyin_dict
 from bert import TTSProsody
-
-
-class MyConverter(NeutralToneWith5Mixin, DefaultConverter):
-    pass
 
 
 def is_chinese(uchar):
@@ -54,7 +47,6 @@ def load_pinyin_dict():
 class VITS_PinYin:
     def __init__(self, bert_path, device, hasBert=True):
         load_pinyin_dict()
-        self.pinyin_parser = Pinyin(MyConverter())
         self.hasBert = hasBert
         if self.hasBert:
             self.prosody = TTSProsody(bert_path, device)
@@ -101,13 +93,10 @@ class VITS_PinYin:
         return " ".join(phonemes), char_embeds
 
     def correct_pinyin_tone3(self, text):
-        pinyin_list = [p[0] for p in self.pinyin_parser.pinyin(
-            text, style=Style.TONE3, strict=False, neutral_tone_with_five=True)]
-        if len(pinyin_list) >= 2:
-            for i in range(1, len(pinyin_list)):
-                try:
-                    if re.findall(r'\d', pinyin_list[i-1])[0] == '3' and re.findall(r'\d', pinyin_list[i])[0] == '3':
-                        pinyin_list[i-1] = pinyin_list[i-1].replace('3', '2')
-                except IndexError:
-                    pass
+        pinyin_list = lazy_pinyin(text,
+                                  style=Style.TONE3,
+                                  strict=False,
+                                  neutral_tone_with_five=True,
+                                  tone_sandhi=True)
+        # , tone_sandhi=True -> 33变调
         return pinyin_list
