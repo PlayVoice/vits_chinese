@@ -22,6 +22,8 @@ https://user-images.githubusercontent.com/16432329/220678182-4775dec8-9229-4578-
 
 3, Framework of **VITS**，get high audio quality
 
+4, Module-wise Distillation, get speedup
+
 :heartpulse:**Tip**: It is recommended to use **Infer Loss** fine-tune model after base model trained, and freeze **PosteriorEncoder** during fine-tuning.
 
 :heartpulse:**意思就是：初步训练时，不用loss_kl_r；训练好后，添加loss_kl_r继续训练，稍微训练一下就行了，如果音频质量差，可以给loss_kl_r乘以一个小于1的系数、降低loss_kl_r对模型的贡献；继续训练时，可以尝试冻结音频编码器Posterior Encoder；总之，玩法很多，需要多尝试！**
@@ -200,6 +202,8 @@ python vits_infer.py --config ./configs/bert_vits_student.json --model vits_bert
 
 ### 代码来源
 [Microsoft's NaturalSpeech: End-to-End Text to Speech Synthesis with Human-Level Quality](https://arxiv.org/abs/2205.04421)
+
+[Nix-TTS: Lightweight and End-to-End Text-to-Speech via Module-wise Distillation](https://arxiv.org/abs/2203.15643)
 
 https://github.com/Executedone/Chinese-FastSpeech2 **bert prosody**
 
