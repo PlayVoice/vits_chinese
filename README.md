@@ -34,6 +34,9 @@ https://user-images.githubusercontent.com/16432329/220678182-4775dec8-9229-4578-
 
 </div>
 
+### 为什么不升级为VITS2
+VITS2最重要的改进是将Flow的WaveNet模块使用Transformer替换，而在TTS流式实现中，通常需要用纯CNN替换Transformer。
+
 ### Online demo，在线体验
 https://huggingface.co/spaces/maxmax20160403/vits_chinese
 
