@@ -220,6 +220,16 @@ https://github.com/wenet-e2e/wetts
 
 https://github.com/csukuangfj **onnx and android**
 
+### BERT应用于TTS
+2019 BERT+Tacotron2: Pre-trained text embeddings for enhanced text-tospeech synthesis.
+
+2020 BERT+Tacotron2-MultiSpeaker: Improving prosody with linguistic and bert derived features in multi-speaker based mandarin chinese neural tts.
+
+2021 BERT+Tacotron2: Extracting and predicting word-level style variations for speech synthesis.
+
+2022 https://github.com/Executedone/Chinese-FastSpeech2
+
+2023 BERT+VISINGER: Towards Improving the Expressiveness of Singing Voice Synthesis with BERT Derived Semantic Information.
 
 # AISHELL3多发音人训练，训练出的模型可用于克隆
 切换代码分支[bert_vits_aishell3](https://github.com/PlayVoice/vits_chinese/tree/bert_vits_aishell3)，对比分支代码可以看到**针对多发音人所做出的修改**
